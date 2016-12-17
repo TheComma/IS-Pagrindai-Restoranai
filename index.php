@@ -15,10 +15,10 @@
 			    	<h3 class="panel-title">Vartotojų prisijungimas</h3>
 			 	</div>
 			  	<div class="panel-body">
-			    	<form accept-charset="UTF-8" role="form">
+			    	<form action="./User/userlogin.php" method="post" accept-charset="UTF-8" role="form">
                     <fieldset>
 			    	  	<div class="form-group">
-			    		    <input class="form-control" placeholder="Vartotojo vardas" name="email" type="text">
+			    		    <input class="form-control" placeholder="Vartotojo vardas" name="username" type="text">
 			    		</div>
 			    		<div class="form-group">
 			    			<input class="form-control" placeholder="Slaptažodis" name="password" type="password" value="">
@@ -26,6 +26,7 @@
 			    		<input class="btn btn-lg btn-success btn-block" type="submit" value="Prisijungti">
 			    	</fieldset>
 			      	</form>
+								<a href="klientu_registracija.php">Klientų registracija</a>
 			    </div>
 			</div>
 		</div>

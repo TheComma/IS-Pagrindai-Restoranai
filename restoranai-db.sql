@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2016 at 01:50 PM
+-- Generation Time: Dec 17, 2016 at 10:42 PM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 5.6.19
 
@@ -67,6 +67,14 @@ CREATE TABLE `klientas` (
   `el_pastas` varchar(25) NOT NULL,
   `adresas` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `klientas`
+--
+
+INSERT INTO `klientas` (`id`, `vardas`, `pavarde`, `telefonas`, `miestas`, `el_pastas`, `adresas`) VALUES
+(1, 'Tadas', 'Radvilavicius', '+37063728870', 'Kaunas', 'radvilt@gmail.com', 'A. Juozapaviciaus 21-34'),
+(6, 'Rokas', 'Kaciurinas', 'pasikeisi', 'pasikeisi', 'pasikeisi@gmail.com', 'pasikeisi');
 
 -- --------------------------------------------------------
 
@@ -296,12 +304,20 @@ CREATE TABLE `uzsakymo_patiekalas` (
 CREATE TABLE `vartotojas` (
   `id` int(11) NOT NULL,
   `vartotojo_vardas` varchar(20) NOT NULL,
-  `slaptazodis` varchar(20) NOT NULL,
+  `slaptazodis` varchar(50) NOT NULL,
   `vartotojo_tipas` int(11) NOT NULL,
-  `vartojo_nuoroda` int(11) NOT NULL,
-  `sukurimo_data` int(11) NOT NULL,
+  `vartotojo_nuoroda` int(11) NOT NULL,
+  `sukurimo_data` datetime NOT NULL,
   `ar_blokuotas` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `vartotojas`
+--
+
+INSERT INTO `vartotojas` (`id`, `vartotojo_vardas`, `slaptazodis`, `vartotojo_tipas`, `vartotojo_nuoroda`, `sukurimo_data`, `ar_blokuotas`) VALUES
+(1, 'tadrad', '1a1dc91c907325c69271ddf0c944bc72', 1, 1, '0000-00-00 00:00:00', 0),
+(2, 'Rokkac', '1a1dc91c907325c69271ddf0c944bc72', 1, 6, '0000-00-00 00:00:00', 0);
 
 --
 -- Indexes for dumped tables
@@ -428,7 +444,7 @@ ALTER TABLE `isdirbtas_laikas`
 -- AUTO_INCREMENT for table `klientas`
 --
 ALTER TABLE `klientas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `padavejas`
 --
@@ -493,7 +509,7 @@ ALTER TABLE `uzsakymo_patiekalas`
 -- AUTO_INCREMENT for table `vartotojas`
 --
 ALTER TABLE `vartotojas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

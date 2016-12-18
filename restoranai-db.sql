@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 17, 2016 at 10:42 PM
+-- Generation Time: Dec 18, 2016 at 04:57 PM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 5.6.19
 
@@ -35,6 +35,14 @@ CREATE TABLE `administratorius` (
   `adresas` varchar(50) NOT NULL,
   `asmens_kodas` varchar(13) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `administratorius`
+--
+
+INSERT INTO `administratorius` (`id`, `vardas`, `pavarde`, `telefonas`, `el_pastas`, `adresas`, `asmens_kodas`) VALUES
+(1, 'Jonas', 'Rimkus', '+37063254485', 'admin@restoranas.lt', 'Test g. 1', '38506259854'),
+(2, 'Petras', 'Stankevicius', '+37065215869', 'info@restoranas.lt', 'Test g,3', '39102129563');
 
 -- --------------------------------------------------------
 
@@ -223,6 +231,14 @@ CREATE TABLE `restoranas` (
   `fk_administratorius` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `restoranas`
+--
+
+INSERT INTO `restoranas` (`id`, `miestas`, `adresas`, `telefonas`, `sukurimo_data`, `fk_administratorius`) VALUES
+(1, 'Kaunas', 'Test g. 2 ', '+37063216548', '2016-12-18 13:00:00', 1),
+(2, 'Kaunas', 'Test g.4', '+37062541520', '2016-12-18 15:00:00', 2);
+
 -- --------------------------------------------------------
 
 --
@@ -232,11 +248,11 @@ CREATE TABLE `restoranas` (
 CREATE TABLE `rezervacija` (
   `id` int(11) NOT NULL,
   `data` date NOT NULL,
-  `laikas` time NOT NULL,
   `sukurimo_data` datetime NOT NULL,
   `pakeitimo_data` datetime NOT NULL,
   `zmoniu_skaicius` int(11) NOT NULL,
   `komentarai` text NOT NULL,
+  `fk_valandos` time NOT NULL,
   `fk_klientas` int(11) NOT NULL,
   `fk_restoranas` int(11) NOT NULL,
   `fk_busena` int(11) NOT NULL,
@@ -253,6 +269,30 @@ CREATE TABLE `rezervacijos_busenos` (
   `id` int(11) NOT NULL,
   `pavadinimas` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rezervacijos_valandos`
+--
+
+CREATE TABLE `rezervacijos_valandos` (
+  `id` int(11) NOT NULL,
+  `valandos` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_lithuanian_ci;
+
+--
+-- Dumping data for table `rezervacijos_valandos`
+--
+
+INSERT INTO `rezervacijos_valandos` (`id`, `valandos`) VALUES
+(1, '14:00:00'),
+(2, '15:00:00'),
+(3, '16:00:00'),
+(4, '17:00:00'),
+(5, '18:00:00'),
+(6, '19:00:00'),
+(7, '20:00:00');
 
 -- --------------------------------------------------------
 
@@ -316,8 +356,10 @@ CREATE TABLE `vartotojas` (
 --
 
 INSERT INTO `vartotojas` (`id`, `vartotojo_vardas`, `slaptazodis`, `vartotojo_tipas`, `vartotojo_nuoroda`, `sukurimo_data`, `ar_blokuotas`) VALUES
-(1, 'tadrad', '1a1dc91c907325c69271ddf0c944bc72', 1, 1, '0000-00-00 00:00:00', 0),
-(2, 'Rokkac', '1a1dc91c907325c69271ddf0c944bc72', 1, 6, '0000-00-00 00:00:00', 0);
+(1, 'tadrad', '1a1dc91c907325c69271ddf0c944bc72', 1, 1, '2016-12-18 13:00:00', 0),
+(2, 'Rokkac', '1a1dc91c907325c69271ddf0c944bc72', 1, 6, '2016-12-18 13:00:00', 0),
+(3, 'admin1', '1a1dc91c907325c69271ddf0c944bc72', 9, 1, '2016-12-18 13:00:00', 0),
+(4, 'admin2', '1a1dc91c907325c69271ddf0c944bc72', 9, 2, '2016-12-18 15:00:00', 0);
 
 --
 -- Indexes for dumped tables
@@ -402,6 +444,12 @@ ALTER TABLE `rezervacijos_busenos`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `rezervacijos_valandos`
+--
+ALTER TABLE `rezervacijos_valandos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `staliukas`
 --
 ALTER TABLE `staliukas`
@@ -434,7 +482,7 @@ ALTER TABLE `vartotojas`
 -- AUTO_INCREMENT for table `administratorius`
 --
 ALTER TABLE `administratorius`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `isdirbtas_laikas`
 --
@@ -484,7 +532,7 @@ ALTER TABLE `produktu_uzsakymo_busena`
 -- AUTO_INCREMENT for table `restoranas`
 --
 ALTER TABLE `restoranas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `rezervacija`
 --
@@ -495,6 +543,11 @@ ALTER TABLE `rezervacija`
 --
 ALTER TABLE `rezervacijos_busenos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `rezervacijos_valandos`
+--
+ALTER TABLE `rezervacijos_valandos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `uzsakymas`
 --
@@ -509,7 +562,7 @@ ALTER TABLE `uzsakymo_patiekalas`
 -- AUTO_INCREMENT for table `vartotojas`
 --
 ALTER TABLE `vartotojas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

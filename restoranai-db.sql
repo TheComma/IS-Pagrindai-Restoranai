@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.6.4
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2016 at 04:57 PM
--- Server version: 10.1.10-MariaDB
--- PHP Version: 5.6.19
+-- Generation Time: Dec 18, 2016 at 06:48 PM
+-- Server version: 5.7.14
+-- PHP Version: 5.6.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -187,6 +187,13 @@ CREATE TABLE `produktas` (
   `komentarai` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `produktas`
+--
+
+INSERT INTO `produktas` (`id`, `pavadinimas`, `kaina`, `sukurimo_data`, `svoris`, `Galiojimo_laikas`, `komentarai`) VALUES
+(1, 'Miltai', 2, '2016-12-18 20:05:14', 1, 0, '');
+
 -- --------------------------------------------------------
 
 --
@@ -197,12 +204,21 @@ CREATE TABLE `produktu_uzsakymas` (
   `id` int(11) NOT NULL,
   `ivedimo_data` datetime NOT NULL,
   `kiekis` int(11) NOT NULL,
-  `pristatymo_data` datetime NOT NULL,
-  `komentarai` text NOT NULL,
-  `redagavimo_data` datetime NOT NULL,
+  `pristatymo_data` datetime DEFAULT NULL,
+  `komentarai` text CHARACTER SET utf8,
+  `redagavimo_data` datetime DEFAULT NULL,
   `fk_produktas` int(11) NOT NULL,
   `fk_busena` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `produktu_uzsakymas`
+--
+
+INSERT INTO `produktu_uzsakymas` (`id`, `ivedimo_data`, `kiekis`, `pristatymo_data`, `komentarai`, `redagavimo_data`, `fk_produktas`, `fk_busena`) VALUES
+(1, '2016-12-18 20:06:29', 5, '2016-12-01 00:00:00', '', '2016-12-01 00:00:00', 1, 1),
+(2, '2016-12-18 20:06:29', 5, '2016-12-01 00:00:00', '', '2016-12-01 00:00:00', 1, 1),
+(3, '2016-12-18 20:06:29', 5, '2016-12-01 00:00:00', '', '2016-12-01 00:00:00', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -215,6 +231,13 @@ CREATE TABLE `produktu_uzsakymo_busena` (
   `pavadinimas` varchar(25) NOT NULL,
   `ivedimo_data` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `produktu_uzsakymo_busena`
+--
+
+INSERT INTO `produktu_uzsakymo_busena` (`id`, `pavadinimas`, `ivedimo_data`) VALUES
+(1, 'sukurtas', '2016-12-18 20:04:43');
 
 -- --------------------------------------------------------
 
@@ -420,6 +443,12 @@ ALTER TABLE `produktas`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `produktu_uzsakymas`
+--
+ALTER TABLE `produktu_uzsakymas`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `produktu_uzsakymo_busena`
 --
 ALTER TABLE `produktu_uzsakymo_busena`
@@ -522,12 +551,17 @@ ALTER TABLE `prisijungimu_istorija`
 -- AUTO_INCREMENT for table `produktas`
 --
 ALTER TABLE `produktas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `produktu_uzsakymas`
+--
+ALTER TABLE `produktu_uzsakymas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `produktu_uzsakymo_busena`
 --
 ALTER TABLE `produktu_uzsakymo_busena`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `restoranas`
 --

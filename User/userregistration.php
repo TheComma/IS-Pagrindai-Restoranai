@@ -18,7 +18,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   $passwordhash = md5($password);
   $sql = "SELECT * FROM vartotojas WHERE vartotojo_vardas = '$username'";
   $result = mysqli_query($dbc, $sql);
-  echo mysqli_num_rows($result);
   if (mysqli_num_rows($result) == 0) {
     $sql = "INSERT INTO klientas (vardas,pavarde,telefonas,miestas,el_pastas,adresas) VALUES ('$name','$lastname','$phone','$city','$email','$adress')";
     $result = mysqli_query($dbc,$sql);

@@ -27,7 +27,7 @@
 </head>
 <body>
   <?php include("./Includes/navbar.php")  ?>
-  <form class="form-horizontal">
+  <form action="./Reservations/new_reservation.php" method="post" class="form-horizontal">
     <fieldset>
 
       <!-- Form Name -->
@@ -42,7 +42,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="restaurant">Restoranas</label>
         <div class="col-md-4">
-          <select id="restaurant" name="restaurant" class="form-control">
+          <select id="restaurant" name="restaurant" class="form-control" required="">
         <option value=""></option>
         <?php while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
         <option value=<?php echo $row['id']; ?>><?php echo $row['adresas']." ".$row['miestas'] ?></option>
@@ -53,12 +53,41 @@
 
       <!-- Text input-->
       <div class="form-group">
-      <label class="col-md-4 control-label" for="reservationdate">Rezervacijos data</label>
-      <div class="col-md-4">
-      <input id="reservationdate" name="reservationdate" type="text" placeholder="Data" class="form-control input-md" required="">
+      	<label class="col-md-4 control-label" for="reservationdate">Rezervacijos data</label>
+      	<div class="col-md-4">
+      		<input id="reservationdate" name="reservationdate" type="text" placeholder="Data" class="form-control input-md" required="">
 
+      	</div>
       </div>
+
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="reservationhour">Rezervacijos laikas</label>
+				<div id="hland" class="col-md-4">
+					<select id="hour" name="reservation_hour" class="form-control" required="">
+						<option value=""></option>
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+      	<label class="col-md-4 control-label" for="reservationdate">Žmonių kiekis</label>
+      	<div class="col-md-1">
+      		<input id="people" name="people" type="number" placeholder="" class="form-control input-md" required="">
+      	</div>
       </div>
+
+		 <div class="form-group">
+  	 	<label class="col-md-4 control-label" for="textarea">Komentarai</label>
+  			<div class="col-md-4">
+    			<textarea class="form-control" id="comments" name="comments"></textarea>
+  			</div>
+		</div>
+
+		<div class="form-group">
+	    <div class="col-md-12 text-center">
+	      <input type="submit" value='Rezervuoti' class="btn btn-primary"  />
+	    </div>
+	  </div>
 
       </fieldset>
     </form>
@@ -72,5 +101,6 @@
     format: 'YYYY-MM-DD'
   });
 	$('#reservationdate').data("DateTimePicker").minDate(new Date());</script>
+	<script src='./Scripts/Scripts.js' type="text/javascript"></script>
 </body>
 </html>

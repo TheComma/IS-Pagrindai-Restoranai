@@ -16,5 +16,7 @@
             die('Negaliu prisijungti: ' . mysqli_connect_errno($dbc) . ' : ' . mysqli_connect_error());
         }
 
+        mysqli_set_charset($dbc, "utf8");
+
         return $dbc;
     }

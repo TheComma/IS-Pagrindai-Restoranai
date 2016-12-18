@@ -12,6 +12,11 @@
 <body>
 	<?php include("Includes/navbar.php")  ?>
 	<div class="container">
+		<?php if ($_SESSION['userType'] == KITCHEN_LEVEL) { ?>
+			<div class="row" style="padding-bottom:10px;">
+				<button id="myBtn" class="btn btn-primary">Užsakyti produktus</button>
+			</div>
+		<?php } ?>
 		<div class="row">
 			<div class="col-md-10 col-md-offset-1">
 				<?php if (count($orders) > 0) { ?>
@@ -33,7 +38,7 @@
 					if ($pageCount > 1) {
 						include("Includes/pagination.php");
 
-						echo paginate($page, $pageCount, null, 2);
+						echo paginate($page, $pageCount, "", 2);
 					}
 				?>
 				<?php } else { ?>
@@ -42,5 +47,12 @@
 			</div>
 		</div>
 	</div>
+	<script>
+        $(document).ready(function(){
+            $("#myBtn").click(function(){
+                window.location.href = "produktu_uzsakymas.php";
+            });
+        });
+    </script>
 </body>
 </html>

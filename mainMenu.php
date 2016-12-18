@@ -26,8 +26,5 @@ if (session_status() == PHP_SESSION_NONE) {
       </p>
     </div>
   </div>
-  </div>
-  <script src='./Scripts/js/jquery-2.2.4.min.js' type='text/javascript'></script>
-  <script src='./Scripts/js/bootstrap.min.js' type='text/javascript'></script>
 </body>
 </html>

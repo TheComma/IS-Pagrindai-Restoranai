@@ -52,4 +52,15 @@
             return $count['count'];
         }
 
+        function newOrder($product, $amount, $comment) {
+            $query = "  INSERT INTO produktu_uzsakymas (ivedimo_data, pristatymo_data, redagavimo_data,
+                            kiekis, komentarai, fk_produktas, fk_busena) 
+                        VALUES(NOW(), NOW(), NOW(), ?, ?, ? , 1)";
+            $stmt = mysqli_prepare($this->database, $query);
+            
+            mysqli_stmt_bind_param($stmt, 'dsi', $amount, $comment, $product);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
+
     }

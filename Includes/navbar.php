@@ -9,13 +9,53 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <?php
-                if($_SESSION["userType"] == 1)
-                {
-               ?>
-                <li><a href="./CreateReservation.php">Rezervuoti Staliuką</a></li>
-                <li><a href="./EditReservation.php">Redaguoti Rezervaciją</a></li>
+                <?php if($_SESSION["userType"] == 1) { ?>
+                     <!-- Parts for the client -->
+                    <li><a href="./CreateReservation.php">Rezervuoti Staliuką</a></li>
+                    <li><a href="./EditReservation.php">Redaguoti Rezervaciją</a></li>
                 <?php } ?>
+
+                <?php if($_SESSION["userType"] == 3) { ?>
+                    <!-- Parts for the kitchen -->
+                    <li><a href="./uzsakytu_produktu_sarasas.php">Produktų užsakymai</a></li>
+                <?php } ?>
+
+                <?php if($_SESSION["userType"] == 5) { ?>
+                    <!-- Parts for the waiter -->
+                <?php } ?>
+
+                <?php if($_SESSION["userType"] == 9) { ?>
+                    <!-- Parts for the admin, because of a lot of options,
+                        dropdowns are suggested -->
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Rezervacijos
+                        <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./CreateReservation.php">Rezervuoti Staliuką</a></li>
+                            <li><a href="./EditReservation.php">Redaguoti Rezervaciją</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Personalas
+                        <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Užsakymai
+                        <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="./uzsakytu_produktu_sarasas.php">Produktų užsakymai</a></li>
+                        </ul>
+                    </li>
+                <?php } ?>
+
+                
+            </ul>
+            <!-- Put this on the right side -->
+            <ul class="nav navbar-nav navbar-right">
                 <li><a href="./User/userlogout.php">Atsijungti</a></li>
             </ul>
         </div>

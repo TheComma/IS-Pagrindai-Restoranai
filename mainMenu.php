@@ -13,6 +13,8 @@ if (session_status() == PHP_SESSION_NONE) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./Content/css/bootstrap.min.css">
   <link rel="stylesheet" href="./Content/style.css">
+  <script src='./Scripts/js/jquery-2.2.4.min.js' type='text/javascript'></script>
+  <script src='./Scripts/js/bootstrap.min.js' type='text/javascript'></script>
 </head>
 <body>
   <?php include("Includes/navbar.php")  ?>

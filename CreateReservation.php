@@ -27,7 +27,7 @@
 </head>
 <body>
   <?php include("./Includes/navbar.php")  ?>
-  <form class="form-horizontal">
+  <form action="./Reservations/new_reservation.php" method="post" class="form-horizontal">
     <fieldset>
 
       <!-- Form Name -->
@@ -63,7 +63,7 @@
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="reservationhour">Rezervacijos laikas</label>
 				<div id="hland" class="col-md-4">
-					<select class="form-control" required="">
+					<select id="hour" name="reservation_hour" class="form-control" required="">
 						<option value=""></option>
 					</select>
 				</div>

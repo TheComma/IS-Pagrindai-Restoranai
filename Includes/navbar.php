@@ -12,7 +12,7 @@
                 <?php if($_SESSION["userType"] == 1) { ?>
                      <!-- Parts for the client -->
                     <li><a href="./CreateReservation.php">Rezervuoti Staliuką</a></li>
-                    <li><a href="./EditReservation.php">Redaguoti Rezervaciją</a></li>
+                    <li><a href="./vartotojo_rezervacijos.php">Vartotojo Rezervacijos</a></li>
                 <?php } ?>
 
                 <?php if($_SESSION["userType"] == 3) { ?>
@@ -52,7 +52,7 @@
                     </li>
                 <?php } ?>
 
-                
+
             </ul>
             <!-- Put this on the right side -->
             <ul class="nav navbar-nav navbar-right">

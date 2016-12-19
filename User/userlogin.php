@@ -1,4 +1,4 @@
-<?php
+ <?php
 	$dbc = mysqli_connect('localhost', 'root', '','restoranai-db');
 	if(!$dbc ){
 		die('Negaliu prisijungti: '.mysqli_error($dbc));
@@ -23,7 +23,7 @@
       session_start();
       $_SESSION["userType"] = $row[3];
       $_SESSION["userId"] = $row[0];
-			$_SESSON["userRefId"] = $row[4];
+			$_SESSION["userRefId"] = $row[4];
       header('Location: ../mainMenu.php');
 	  }
   }

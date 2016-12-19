@@ -1,12 +1,12 @@
 <?php
-    require_once("Includes/config.php");
+	require_once("Includes/config.php");
 	require_once("Includes/functions.php");
 	require_once("Uzsakymai/Models/Produktu_uzsakymas.php");
 	require_once("Uzsakymai/Models/Produktas.php");
 
 	session_start();
 
-    $dbc = connect();
+	$dbc = connect();
 
 	function isfloat($f) {
 		return ($f == (string)(float)$f);

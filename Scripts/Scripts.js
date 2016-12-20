@@ -16,3 +16,16 @@ $(document).ready(function(){
     }
   })
 });
+
+function DeleteReservation(id){
+  dataid = "id="+id;
+  $.ajax({
+      type: "POST",
+      url: "./Ajax_Requests/DeleteReservation.php",
+      data: dataid,
+      cache: false,
+      success: function(){
+        $('#'+id).remove();
+      }
+  })
+}

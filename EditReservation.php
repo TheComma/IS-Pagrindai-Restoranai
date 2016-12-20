@@ -12,6 +12,14 @@
 	if (mysqli_connect_errno()) {
 	die('Connect failed: '.mysqli_connect_errno().' : '.mysqli_connect_error());
 	}
+  if(!isset($_GET['id'])){
+    echo 'nera id :(';
+  }
+  $id = $_GET['id'];
+  $query = "SELECT * FROM rezervacija WHERE id = '$id'";
+  $result = mysqli_query($dbc,$query);
+  $data = mysqli_fetch_array($result, MYSQLI_ASSOC);
+  $rezerv_data = $data['data'];
 ?>
 
 <!DOCTYPE html>
@@ -27,17 +35,18 @@
 </head>
 <body>
   <?php include("./Includes/navbar.php")  ?>
-  <form action="./Reservations/new_reservation.php" method="post" class="form-horizontal">
+  <form action="./Reservations/edit_reservation.php" method="post" class="form-horizontal">
     <fieldset>
 
       <!-- Form Name -->
-      <legend>Rezervacijos sukūrimas</legend>
+      <legend>Rezervacijos redagavimas</legend>
 
       <?php
       $query = "SELECT id,miestas,adresas FROM restoranas";
       $result = mysqli_query($dbc, $query);
        ?>
 
+       <input type="hidden" name="id" value=<?php echo $id;?>>
       <!-- Select Basic -->
       <div class="form-group">
         <label class="col-md-4 control-label" for="restaurant">Restoranas</label>
@@ -45,7 +54,8 @@
           <select id="restaurant" name="restaurant" class="form-control" required="">
         <option value=""></option>
         <?php while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-        <option value=<?php echo $row['id']; ?>><?php echo $row['adresas']." ".$row['miestas'] ?></option>
+        <option value=<?php echo $row['id'];
+        if($data['fk_restoranas'] == $row['id']) {echo' selected';} ?>><?php echo $row['adresas']." ".$row['miestas'] ?></option>
         <?php } ?>
         </select>
       </div>
@@ -55,7 +65,7 @@
       <div class="form-group">
       	<label class="col-md-4 control-label" for="reservationdate">Rezervacijos data</label>
       	<div class="col-md-4">
-      		<input id="reservationdate" name="reservationdate" type="text" placeholder="Data" class="form-control input-md" required="">
+      		<input id="reservationdate" name="reservationdate" type="text" value=<?php echo $data['data']; ?> placeholder="Data" class="form-control input-md" required="">
 
       	</div>
       </div>
@@ -72,14 +82,14 @@
 			<div class="form-group">
       	<label class="col-md-4 control-label" for="people">Žmonių kiekis</label>
       	<div class="col-md-1">
-      		<input id="people" name="people" type="number" placeholder="" class="form-control input-md" required="">
+      		<input id="people" name="people" type="number" value=<?php echo $data['zmoniu_skaicius']; ?> placeholder="" class="form-control input-md" required="">
       	</div>
       </div>
 
 		 <div class="form-group">
   	 	<label class="col-md-4 control-label" for="textarea">Komentarai</label>
   			<div class="col-md-4">
-    			<textarea class="form-control" id="comments" name="comments"></textarea>
+    			<textarea class="form-control" id="comments" name="comments"><?php echo $data['komentarai']; ?></textarea>
   			</div>
 		</div>
 
@@ -95,8 +105,6 @@
   <script src='./Scripts/js/bootstrap-datetimepicker.min.js' type='text/javascript'></script>
   <script src='./Scripts/js/bootstrap.min.js' type='text/javascript'></script>
   <script>
-  var date = new Date();
-  date.setDate(date.getDate()-1);
   $('#reservationdate').datetimepicker({
     format: 'YYYY-MM-DD'
   });

@@ -24,6 +24,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   $data = date('Y-m-d H:i:s');
   $query = "UPDATE rezervacija SET data='$reservationdate',pakeitimo_data='$data',zmoniu_skaicius='$people',komentarai='$comments',fk_restoranas='$restaurant',fk_valandos='$reservationhour',fk_staliukas='$staliukas' WHERE id = '$id'";
   $result = mysqli_query($dbc,$query);
+  $dbc->close();
   if($result){
    header('Location: ../vartotojo_rezervacijos.php');
   }

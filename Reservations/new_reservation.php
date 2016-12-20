@@ -24,6 +24,7 @@
     $query = "INSERT INTO rezervacija (data,sukurimo_data,pakeitimo_data,zmoniu_skaicius,	komentarai,fk_valandos,fk_klientas,fk_restoranas,fk_busena,fk_staliukas) VALUES".
     "('$reservationdate','$data','$data','$people','$comments','$reservationhour','$clientid','$restaurant',1,'$staliukas')";
     $result = mysqli_query($dbc,$query);
+    $dbc->close();
     if($result){
      header('Location: ../mainMenu.php');
     }

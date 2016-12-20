@@ -1,7 +1,7 @@
 <?php
 	if (session_status() == PHP_SESSION_NONE) {
     	session_start();
-    	if(!isset($_SESSION["userType"]) || !isset($_SESSION["userType"])){
+    	if(!isset($_SESSION["userType"]) || !isset($_SESSION["userId"])){
       	header('Location: ./index.html');
     	}
 		}
@@ -38,18 +38,26 @@
       $result = mysqli_query($dbc, $query);
        ?>
 
-      <!-- Select Basic -->
-      <div class="form-group">
-        <label class="col-md-4 control-label" for="restaurant">Restoranas</label>
-        <div class="col-md-4">
-          <select id="restaurant" name="restaurant" class="form-control" required="">
-        <option value=""></option>
-        <?php while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
-        <option value=<?php echo $row['id']; ?>><?php echo $row['adresas']." ".$row['miestas'] ?></option>
-        <?php } ?>
-        </select>
-      </div>
-     </div>
+      <?php
+			if(isset($_SESSION["restaurantId"]))
+			{
+				?>
+				<input type="hidden" id="restaurant" name="restaurant" value="<?php echo $_SESSION["restaurantId"]?>">
+		 <?php
+	 		}
+		 else{?>
+			 <div class="form-group">
+				 <label class="col-md-4 control-label" for="restaurant">Restoranas</label>
+				 <div class="col-md-4">
+					 <select id="restaurant" name="restaurant" class="form-control" required="">
+				 <option value=""></option>
+				 <?php while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) { ?>
+				 <option value=<?php echo $row['id']; ?>><?php echo $row['adresas']." ".$row['miestas'] ?></option>
+				 <?php } ?>
+				 </select>
+			 </div>
+			</div>
+			<?php } ?>
 
       <!-- Text input-->
       <div class="form-group">

@@ -19,11 +19,17 @@
       header('Location: ../index.php');
     }
 	  else {
-      $dbc->close();
       session_start();
+      if($row[3] == 9){
+        $sql = "SELECT id FROM restoranas WHERE fk_administratorius = '$row[4]'";
+        $result = mysqli_query($dbc,$sql);
+        $id = mysqli_fetch_row($result);
+        $_SESSION["restaurantId"] = $id[0];
+      }
       $_SESSION["userType"] = $row[3];
       $_SESSION["userId"] = $row[0];
 			$_SESSION["userRefId"] = $row[4];
+      $dbc->close();
       header('Location: ../mainMenu.php');
 	  }
   }

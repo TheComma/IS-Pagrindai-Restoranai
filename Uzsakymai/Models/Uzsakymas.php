@@ -6,6 +6,32 @@
             $this->database = $dbc;
         }
 
+        function getOrder($id) {
+             $query = " SELECT uzsakymas.*, padavejas.vardas AS padVardas, padavejas.pavarde AS padPavarde
+						FROM uzsakymas
+						INNER JOIN staliukas
+							ON staliukas.staliuko_indentifikatorius=uzsakymas.fk_staliukas
+						INNER JOIN padavejas
+							ON staliukas.fk_padavejas=padavejas.id
+                        WHERE uzsakymas.id=$id
+                        ORDER BY data ASC";
+
+            //echo $query;
+
+            $result = mysqli_query($this->database, $query);
+
+            if (!$result || (mysqli_num_rows($result) < 1)) {
+                return NULL;
+            }
+
+            $dbarray = array();
+            while ($order = mysqli_fetch_assoc($result)){
+                $dbarray[] = $order;
+            }
+
+            return $dbarray;
+        }
+
         function getOrders($page = null, $count = null){
             $query = "  SELECT uzsakymas.*, padavejas.vardas AS padVardas, padavejas.pavarde AS padPavarde
 						FROM uzsakymas
@@ -13,7 +39,7 @@
 							ON staliukas.staliuko_indentifikatorius=uzsakymas.fk_staliukas
 						INNER JOIN padavejas
 							ON staliukas.fk_padavejas=padavejas.id
-                        ORDER BY data ASC";
+                        ORDER BY busena ASC, data ASC";
 
             //echo $query;
 
@@ -59,6 +85,24 @@
             $stmt = mysqli_prepare($this->database, $query);
             
             mysqli_stmt_bind_param($stmt, 's', $table);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
+
+        function updateOrder($id, $table) {
+            $query = "  UPDATE uzsakymas SET fk_staliukas = ? WHERE id = ?";
+            $stmt = mysqli_prepare($this->database, $query);
+            
+            mysqli_stmt_bind_param($stmt, 'si', $table, $id);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
+
+        function completeOrder($orderid) {
+            $query = "  UPDATE uzsakymas SET busena = 2, uzsakymo_pabaiga = NOW() WHERE id = ?";
+            $stmt = mysqli_prepare($this->database, $query);
+            
+            mysqli_stmt_bind_param($stmt, 'i',  $orderid);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
         }

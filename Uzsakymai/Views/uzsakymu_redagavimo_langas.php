@@ -14,17 +14,18 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<form class="form-horizontal" method="POST">
+				<input hidden disabled id="orderId" value="<?php echo $order[0]['id'] ?>">
 				<div class="col-md-12">
 					<!-- Select Basic -->
 					<div class="form-group">
 						<label class="col-md-4 control-label" for="staliukas">Staliukas</label>
 						<div class="col-md-4">
-							<select id="staliukas" name="staliukas" class="form-control">
+							<select id="staliukas" name="staliukas" class="form-control" <?php echo  $order[0]['busena'] != 1 ? "disabled" : ""; ?>>
 								<option value="-1">Pasirinkite staliuką</option>
-								<?php $selectedId = isset($values['staliukas']) ? $values['staliukas'] : -1; ?>
+								<?php $selectedId = $order[0]['fk_staliukas']; ?>
 								<?php foreach($tableList as $table) {
-									$selected = $selectedId == $table['staliuko_indentifikatorius'] ? " selected" : "";
-									echo '<option value = ' . $table['staliuko_indentifikatorius'] . $selected . '>' .  htmlspecialchars($table['staliuko_indentifikatorius']) . '</option>';
+									$selected = strcmp($selectedId, $table['staliuko_indentifikatorius']) == 0 ? " selected" : "";
+									echo '<option value=' . $table['staliuko_indentifikatorius'] . $selected . '>' .  htmlspecialchars($table['staliuko_indentifikatorius']) . '</option>';
 								} ?>
 							</select>
 							<?php if ( isset($errors['staliukas']) ) {
@@ -36,27 +37,35 @@
 
 				<div class="col-md-12">
 					<label for="productTable">Patiekalai</label>
-					<button type=button id="addProductBtn" class="btn btn-primary" style="margin-left:20px;">Pridėti patiekalą</button>
+					<button type=button id="addProductBtn" class="btn btn-primary" style="margin-left:20px;" <?php echo  $order[0]['busena'] != 1 ? "disabled" : ""; ?>>
+						Pridėti patiekalą
+					</button>
+					<button type=button id="completeOrderBtn" class="btn btn-primary pull-right" style="margin-right:20px;" <?php echo  $order[0]['busena'] != 1 ? "disabled" : ""; ?>>
+						Užbaigti užsakymą
+					</button>
 					<table style="margin-top:10px;" id="productTable" class="table">
 						<tbody>
 							<tr class="hidden">
 								<td>
 									<div class="form-group">
 										<div class="col-md-12">
-											<select onchange="tipasSelectionChanged(this)" name="patiekaloTipas[]" class="form-control patiekaloTipasSelect">
+											<select onchange="tipasSelectionChanged(this)" class="form-control patiekaloTipasSelect">
 												<option value="-1">Pasirinkite patiekalo tipą</option>
 												<?php foreach($dishTypeList as $dish) {
-													echo '<option value = ' . $dish['id'] . '>' .  htmlspecialchars($dish['pavadinimas']) . '</option>';
+													echo '<option class="categoryId' . $dish['id'] . '" value = ' . $dish['id'] . '>' .  htmlspecialchars($dish['pavadinimas']) . '</option>';
 												} ?>
 											</select>
-										</div
+										</div>
 									</div>
 								</td>
 								<td>
 									<div class="form-group">
 										<div class="col-md-12">
-											<select name="patiekalas[]" class="form-control patiekalasSelect" disabled>
+											<select name="patiekalas[]" class="form-control patiekalasSelect">
 												<option value="-1">Pasirinkite patiekalą</option>
+												<?php foreach($dishList as $dish) {
+													echo '<option class="categoryId' . $dish['fk_tipas'] . '" value=' . $dish['id'] . '>' .  htmlspecialchars($dish['pavadinimas']) . '</option>';
+												} ?>
 											</select>
 										</div>
 									</div>
@@ -69,91 +78,57 @@
 									</div>
 								</td>
 								<td>
-									<div class="col-md-8 col-md-offset-1">
-										<button onclick="SomeDeleteRowFunction(this)" class="btn btn-warning removeButton" type="button">Pašalinti</button>
-									</div>
 								</td>
 							</tr>
 
-							<?php foreach($values['patiekalas'] as $key => $dishId) { ?>
-								<tr>
-									<td>
-										<div class="form-group">
-											<div class="col-md-12">
-												<select onchange="tipasSelectionChanged(this)" name="patiekaloTipas[]" class="form-control">
-													<option value="-1">Pasirinkite produkto tipą</option>
-													<?php $selectedId = $values['patiekaloTipas'][$key]; ?>
-													<?php foreach($dishTypeList as $dish) {
-														$selected = $dish['id'] == $selectedId ? " selected" : "";
-														echo '<option value = ' . $dish['id'] . $selected . '>' .  htmlspecialchars($dish['pavadinimas']) . '</option>';
-													} ?>
-												</select>
-												<?php if ( isset($errors['patiekaloTipas'][$key]) ) {
-													echo '<p class="text-danger"> * ' . $errors['patiekaloTipas'][$key] . '</p>';
-												} ?>
-											</div
-										</div>
-									</td>
-									<td>
-										<?php $typePicked = isset($errors['patiekaloTipas'][$key]) ? false : true; ?>
-										<div class="form-group">
-											<div class="col-md-12">
-												<select name="patiekalas[]" class="form-control patiekalasSelect" <?php echo $typePicked ? "" : "disabled"; ?>>
-													<option value="-1">Pasirinkite patiekalą</option>
-													<?php
-														if ( $typePicked ) {
-															$filteredDishList = array();
-
-															foreach($dishList as $dish) {
-																if ($dish['fk_tipas'] == $values['patiekaloTipas'][$key]) {
-																	$filteredDishList[] = $dish;
-																}
-															}
-
-															foreach($filteredDishList as $dish) {
-																$selected = $dish['id'] == $produktoId ? " selected" : "";
-																echo '<option value = ' . $dish['id'] . $selected . '>' .  htmlspecialchars($dish['pavadinimas']) . '</option>';
-															} 
-														} 
-													?>
-														
-												</select>
-												<?php if ( $typePicked && isset($errors['patiekalas'][$key]) ) {
-													echo '<p class="text-danger"> * ' . $errors['patiekalas'][$key] . '</p>';
-												} ?>
-											</div
-										</div>
-									</td>
-									<td>
-										<div class="form-group">
-											<div class="col-md-11 col-md-offset-1">
-												<input  name="kiekis[]" type="text" placeholder="kiekis" class="form-control" 
-													value="<?php echo htmlspecialchars($values['kiekis'][$key]); ?>">
-												<?php if ( isset($errors['kiekis'][$key]) ) {
-													echo '<p class="text-danger"> * ' . $errors['kiekis'][$key] . '</p>';
-												} ?>
+							<?php if (count($orderedDishList) > 0) {
+								foreach($orderedDishList as $key => $dish) { ?>
+									<tr>
+										<td>
+											<div class="form-group">
+												<input hidden class="orderedDishId" value="<?php echo $dish['id']; ?>">
+												<div class="col-md-12">
+													<label>Būsena:</label><p> <?php echo $dish['busena']; ?></p>
+												</div
 											</div>
-										</div>
-									</td>
-									<td>
-										<div class="col-md-8 col-md-offset-1">
-											<button onclick="SomeDeleteRowFunction(this)" class="btn btn-warning removeButton" type="button">Pašalinti</button>
-										</div>
-									</td>
-								</tr>
-							<?php  } ?>
+										</td>
+										<td>
+											<div class="form-group">
+												<div class="col-md-12">
+													<label>Patiekalas:</label><p> <?php echo $dish['pavadinimas']; ?></p>
+												</div
+											</div>
+										</td>
+										<td style="text-wrap: normal;word-wrap: break-word;">
+											<div class="form-group">
+												<div class="col-md-11 col-md-offset-1">
+													<label>Komentaras:</label><p> <?php echo $dish['komentaras']; ?></p>
+												</div>
+											</div>
+										</td>
+										<td>
+											<?php if ($dish['busena'] == 1) { ?>
+												<div class="col-md-8 col-md-offset-1">
+													<button onclick="SomeDeleteRowFunction(this)" class="btn btn-warning" type="button">Atšaukti</button>
+												</div>
+											<?php } ?>
+										</td>
+									</tr>
+								<?php  } ?>
+							<?php } ?>
 
 						</tbody>
 					</table>
 				</div>
-				<div class="col-md-11">
-					<button class="btn btn-primary pull-right" type="submit">Saugoti</button></div>
+				<div <?php echo  $order[0]['busena'] != 1 ? "hidden" : ""; ?> class="col-md-11 submitDiv">
+					<button class="btn btn-primary pull-right saveButton" type="submit">Saugoti</button></div>
 				</div>
 			</form>
 		</div>
 	</div>
 
 	<script>
+		var allOptions;
         $(document).ready(function(){
             $("#addProductBtn").click(function(){
 				$('#productTable tbody .hidden')
@@ -161,30 +136,55 @@
 					.removeClass('hidden')
 					.appendTo('#productTable tbody');
             });
-        });
+
+			$("#completeOrderBtn").click(function(){
+				var id = $("#orderId").val();
+
+				dataid = "id="+id;
+				//console.log(id);
+				$.ajax({
+					type: "POST",
+					url: "./Ajax_Requests/CompleteOrder.php",
+					data: dataid,
+					cache: false,
+					success: function(data){
+						//console.log(data);
+						window.location.href =  window.location.href;
+					}
+				});
+			});
+
+			allOptions = $('#productTable tbody .hidden .patiekalasSelect option')
+		});
 
 		function SomeDeleteRowFunction(o){
-			var p=o.parentNode.parentNode.parentNode;
-         	p.parentNode.removeChild(p);
+			var id = $(o).closest('tr').find(".orderedDishId").val();
+
+			dataid = "id="+id;
+			//console.log(id);
+			$.ajax({
+				type: "POST",
+				url: "./Ajax_Requests/CancelOrderDish.php",
+				data: dataid,
+				cache: false,
+				success: function(data){
+					 window.location.href =  window.location.href;
+				}
+			})
 		}
 
 		function tipasSelectionChanged(o) {
-			var x = $(o).val();
-			if (x >= 0) {
-				$(o).closest("tr")
-					.find(".patiekalasSelect")
-					.prop('disabled', false);
-			} else {
-				$(o).closest("tr")
-					.find(".patiekalasSelect")
-					.val(-1);
-
-				$(o).closest("tr")
-					.find(".patiekalasSelect")
-					.prop('disabled', true);
-			}
-			
+				$(o).closest('tr').find('.patiekalasSelect option').remove()
+				var classN = $(o).find('option:selected').prop('class');
+				var opts = allOptions.filter('.' + classN);
+				var x = $(o).closest('tr').find('.patiekalasSelect')
+				$.each(opts, function (i, j) {
+					$(j).appendTo(x);
+				});
 		}
+
+		
+
     </script>
 
 </body>

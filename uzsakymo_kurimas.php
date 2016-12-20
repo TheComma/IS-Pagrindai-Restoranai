@@ -49,7 +49,7 @@
 		
 		$tableList = $tables->getTableList();
 
-		var_dump($tableList);
+		//var_dump($tableList);
 
 		include("Uzsakymai/Views/uzsakymu_kurimo_langas.php");
 

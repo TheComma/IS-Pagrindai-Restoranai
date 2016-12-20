@@ -29,3 +29,27 @@ function DeleteReservation(id){
       }
   })
 }
+function ConfirmReservation(id){
+  dataid = "id="+id;
+  $.ajax({
+      type: "POST",
+      url: "./Ajax_Requests/ConfirmReservation.php",
+      data: dataid,
+      cache: false,
+      success: function(){
+        $('#'+id).remove();
+      }
+  })
+}
+function DenyReservation(id){
+  dataid = "id="+id;
+  $.ajax({
+      type: "POST",
+      url: "./Ajax_Requests/DenyReservation.php",
+      data: dataid,
+      cache: false,
+      success: function(){
+        $('#'+id).remove();
+      }
+  })
+}

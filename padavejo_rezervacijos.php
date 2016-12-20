@@ -4,7 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
     if(!isset($_SESSION["userType"]) || !isset($_SESSION["userType"]) || !isset($_SESSION['userRefId'])){
       header('Location: index.html');
     }
-    elseif($_SESSION["userType"] != 9 && !isset($_SESSION["restaurantId"])){
+    elseif($_SESSION["userType"] != 5){
       header('Location: mainMenu.php');
     }
 }
@@ -15,8 +15,8 @@ if(!$dbc ){
 if (mysqli_connect_errno()) {
 die('Connect failed: '.mysqli_connect_errno().' : '.mysqli_connect_error());
 }
-$rId = $_SESSION["restaurantId"];
-$query = "SELECT rezervacija.data, rezervacija.zmoniu_skaicius,rezervacija.komentarai,rezervacijos_valandos.valandos,restoranas.adresas,restoranas.miestas,rezervacija.id FROM rezervacija,rezervacijos_valandos,restoranas WHERE fk_busena = 1 AND fk_restoranas='$rId' AND rezervacija.fk_valandos = rezervacijos_valandos.id AND rezervacija.fk_restoranas = restoranas.id";
+$waiterId = $_SESSION['userRefId'];
+$query = "SELECT rezervacija.data, rezervacija.zmoniu_skaicius,rezervacija.komentarai,rezervacijos_valandos.valandos,restoranas.adresas,restoranas.miestas,rezervacija.id FROM rezervacija,rezervacijos_valandos,restoranas,staliukas,padavejas WHERE fk_busena = 2 AND padavejas.id = '$waiterId' AND staliukas.fk_padavejas = padavejas.id AND fk_staliukas = staliukas.staliuko_indentifikatorius AND rezervacija.fk_valandos = rezervacijos_valandos.id AND rezervacija.fk_restoranas = restoranas.id";
 $result = mysqli_query($dbc,$query);
  ?>
 <!DOCTYPE html>
@@ -41,10 +41,6 @@ $result = mysqli_query($dbc,$query);
           <th>Restoranas</th>
           <th>Žmonių kiekis</th>
           <th>Komentarai</th>
-          <th>Redaguoti</th>
-          <th>Trinti</th>
-          <th>Patvirtinti</th>
-          <th>Atmesti</th>
         </tr>
       </thead>
       <tbody>
@@ -56,11 +52,7 @@ $result = mysqli_query($dbc,$query);
         .'<td>'.$row[3].'</td>'
         .'<td>'.$row[4].' '.$row[5].'</td>'
         .'<td>'.$row[1].'</td>'
-        .'<td>'.$row[2].'</td>'
-        .'<td><a href="./EditReservation.php?id='.$row[6].'">Redaguoti</a></td>'
-        .'<td><a onclick=DeleteReservation('.$row[6].')>Trinti</a></td>'
-        .'<td><a onclick=ConfirmReservation('.$row[6].')>Patvirtinti</a></td>'
-        .'<td><a onclick=DenyReservation('.$row[6].')>Atmesti</a></td></tr>';
+        .'<td>'.$row[2].'</td>';
         }
         $dbc->close();
         ?>

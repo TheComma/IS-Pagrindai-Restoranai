@@ -23,6 +23,7 @@
                 <?php if($_SESSION["userType"] == 5) { ?>
                     <!-- Parts for the waiter -->
                     <li><a href="./patiekalu_sarasas.php">Patiekalai</a></li>
+                    <li><a href="./padavejo_rezervacijos.php">Rezervacijos</a></li>
                 <?php } ?>
 
                 <?php if($_SESSION["userType"] == 9) { ?>
@@ -34,6 +35,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="./CreateReservation.php">Rezervuoti Staliuką</a></li>
                             <li><a href="./EditReservation.php">Redaguoti Rezervaciją</a></li>
+                            <li><a href="./admin_reservations.php">Rezervaciju valdymas</a></li>
                         </ul>
                     </li>
 

@@ -23,6 +23,7 @@
                 <?php if($_SESSION["userType"] == 5) { ?>
                     <!-- Parts for the waiter -->
                     <li><a href="./patiekalu_sarasas.php">Patiekalai</a></li>
+                    <li><a href="./uzsakymu_sarasas.php">Patiekalų užsakymai</a></li>
                 <?php } ?>
 
                 <?php if($_SESSION["userType"] == 9) { ?>
@@ -48,6 +49,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Užsakymai
                         <span class="caret"></span></a>
                         <ul class="dropdown-menu">
+                            <li><a href="./uzsakymu_sarasas.php">Patiekalų užsakymai</a></li>
                             <li><a href="./uzsakytu_produktu_sarasas.php">Produktų užsakymai</a></li>
                             <li><a href="./patiekalu_sarasas.php">Patiekalai</a></li>
                         </ul>

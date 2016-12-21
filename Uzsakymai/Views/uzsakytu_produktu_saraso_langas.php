@@ -65,6 +65,10 @@
 	</div>
 	<script>
         $(document).ready(function(){
+			$('#myBtn').click(function(){
+				window.location.href = "produktu_uzsakymas.php";
+			});
+
             $(".confirmButton").click(function(){
                var id = $(this).closest('tr').find(".orderId").val();
 

@@ -33,7 +33,7 @@
 
 		<!-- Text input-->
 		<div class="form-group">
-			<label class="col-md-4 control-label" for="kiekis">Text Input</label>  
+			<label class="col-md-4 control-label" for="kiekis">Kiekis</label>  
 			<div class="col-md-2">
 				<input id="kiekis" name="kiekis" type="text" placeholder="kiekis" class="form-control" 
 						value="<?php echo isset($values['kiekis']) ? htmlspecialchars($values['kiekis']) : "";?>">
@@ -45,7 +45,7 @@
 
 		<!-- Textarea -->
 		<div class="form-group">
-			<label class="col-md-4 control-label" for="komentaras">Text Area</label>
+			<label class="col-md-4 control-label" for="komentaras">Komentaras</label>
 			<div class="col-md-4">                     
 				<textarea class="form-control" id="komentaras" name="komentaras" ><?php
 					 echo isset($values['komentaras']) ? htmlspecialchars($values['komentaras']) : "";

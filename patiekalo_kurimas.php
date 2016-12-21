@@ -106,7 +106,7 @@
 
 	// User logged in and with required privileges
 	if ( isset($_SESSION['userId']) && 
-			($_SESSION['userType'] == WAITER_LEVEL || $_SESSION['userType'] == ADMIN_LEVEL) ) {
+			($_SESSION['userType'] == KITCHEN_LEVEL || $_SESSION['userType'] == ADMIN_LEVEL) ) {
 		$dishes = new Patiekalas($dbc);
 		$dishProducts = new Patiekalo_produktas($dbc);
 

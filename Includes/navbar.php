@@ -19,11 +19,11 @@
                     <!-- Parts for the kitchen -->
                     <li><a href="./uzsakytu_produktu_sarasas.php">Produktų užsakymai</a></li>
                     <li><a href="./gaminami_patiekalai.php">Patiekalų gamyba</a></li>
+                    <li><a href="./patiekalu_sarasas.php">Patiekalai</a></li>
                 <?php } ?>
 
                 <?php if($_SESSION["userType"] == 5) { ?>
                     <!-- Parts for the waiter -->
-                    <li><a href="./patiekalu_sarasas.php">Patiekalai</a></li>
                     <li><a href="./uzsakymu_sarasas.php">Patiekalų užsakymai</a></li>
                     <li><a href="./padavejo_rezervacijos.php">Rezervacijos</a></li>
                 <?php } ?>

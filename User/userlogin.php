@@ -13,12 +13,17 @@
 		$sql = "SELECT * FROM vartotojas WHERE vartotojo_vardas = '$username' AND slaptazodis = '$passwordhash'";
     $result = mysqli_query($dbc, $sql);
 		$row = mysqli_fetch_row($result);
-
+    $data = date('Y-m-d H:i:s');
+    $ip = $_SERVER['REMOTE_ADDR'];
 	  if (mysqli_num_rows($result) == 0 || $row[6]) {
+      $sql = "INSERT INTO prisijungimu_istorija (data, ip_adresas, ar_pavyko,fk_vartotojas) VALUES ('$data','$ip','0''1')";
+      $re = mysqli_query($dbc,$sql);
       $dbc->close();
       header('Location: ../index.php');
     }
 	  else {
+      $sql = "INSERT INTO prisijungimu_istorija (data, ip_adresas, ar_pavyko,fk_vartotojas) VALUES ('$data','$ip','1''1')";
+      $re = mysqli_query($dbc,$sql);
       session_start();
       if($row[3] == 9){
         $sql = "SELECT id FROM restoranas WHERE fk_administratorius = '$row[4]'";

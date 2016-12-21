@@ -119,7 +119,7 @@
 
 		// Form submit
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			var_dump($_POST);
+			//var_dump($_POST);
 			//die();
 
 			if ( validate_post($errors, $values) ) {
@@ -130,7 +130,7 @@
 									$values['komentaras']);
 				$dishId = $dishes->getLastInsertId();
 
-				var_dump($dishId);
+				//var_dump($dishId);
 
 				$dishProducts->insertDishProducts($dishId, $values['produktas'], $values['kiekis']);
 				//redirect("uzsakytu_produktu_sarasas.php");

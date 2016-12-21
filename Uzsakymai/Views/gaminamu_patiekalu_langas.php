@@ -32,9 +32,9 @@
 							<td style="text-wrap: normal;word-wrap: break-word;"><?php echo $order['komentaras'] ?></td>
 							<td>
 								<input class="orderId" type="text" hidden disabled value="<?php echo $order['id']; ?>"/>
-								<?php if ($order['busena'] == 1) { ?>
+								<?php if ($order['fk_busena'] == 1) { ?>
 										<button class="btn btn-primary produceButton" type="button">Gaminti</button>
-								<?php } else if ($order['busena'] == 2) { ?>
+								<?php } else if ($order['fk_busena'] == 2) { ?>
 										<button class="btn btn-primary finishButton" type="button">Užbaigti</button>
 								<?php	} ?>
 							</td>

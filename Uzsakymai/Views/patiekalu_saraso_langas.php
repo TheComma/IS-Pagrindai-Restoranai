@@ -1,7 +1,7 @@
  <!DOCTYPE html>
 <html>
 <head>
-	<title>Klientų registracija</title>
+	<title>Patiekalų sąrašas</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="./Content/css/bootstrap.min.css">
@@ -23,7 +23,7 @@
 				<table class="table">
 					<tr>
 						<th>Produktas</th>
-						<th>Kiekis</th>
+						<th>Kaina</th>
 						<th>Būsena</th>
 					</tr>
 					<?php foreach($dishes as $dish) { ?>

@@ -85,6 +85,8 @@
 		$dishTypeList = $dishTypes->getProductTypeList();
 		$orderedDishList = $orderDishes->getOrderDishes($_GET['id']);
 
+		//var_dump($orderedDishList);
+
 		include("Uzsakymai/Views/uzsakymu_redagavimo_langas.php");
 
 	} else {

@@ -63,4 +63,14 @@
             mysqli_stmt_close($stmt);
         }
 
+        function setOrderState($id, $status) {
+            $query = "  UPDATE produktu_uzsakymas SET fk_busena = ? WHERE id = ?";
+            $stmt = mysqli_prepare($this->database, $query);
+            
+            mysqli_stmt_bind_param($stmt, 'ii', $status, $id);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
+	
+
     }

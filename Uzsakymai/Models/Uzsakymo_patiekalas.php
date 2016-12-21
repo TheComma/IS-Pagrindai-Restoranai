@@ -8,8 +8,11 @@
 
 		function getOrderDishes($order){
             $query = "  SELECT uzsakymo_patiekalas.*, patiekalas.pavadinimas,
-                            patiekalo_tipas.pavadinimas AS tipoPavadinimas
+                            patiekalo_tipas.pavadinimas AS tipoPavadinimas,
+                            patiekalo_busena.pavadinimas AS busena
                         FROM uzsakymo_patiekalas
+                        INNER JOIN patiekalo_busena
+                            ON fk_busena=patiekalo_busena.id
                         INNER JOIN patiekalas
                             ON fk_patiekalas=patiekalas.id
                         INNER JOIN patiekalo_tipas
@@ -36,8 +39,11 @@
         function getCurrentOrders() {
             $query = "  SELECT uzsakymo_patiekalas.*, patiekalas.pavadinimas,
                             staliukas.staliuko_indentifikatorius AS staliukoPav,
-                            padavejas.vardas AS padavejoVardas, padavejas.pavarde AS padavejoPavarde
+                            padavejas.vardas AS padavejoVardas, padavejas.pavarde AS padavejoPavarde,
+                            patiekalo_busena.pavadinimas AS busena
                         FROM uzsakymo_patiekalas
+                        INNER JOIN patiekalo_busena
+                            ON fk_busena=patiekalo_busena.id
                         INNER JOIN patiekalas
                             ON fk_patiekalas=patiekalas.id
                         INNER JOIN uzsakymas
@@ -46,8 +52,8 @@
                             ON fk_staliukas=staliuko_indentifikatorius
                         INNER JOIN padavejas
                             ON fk_padavejas=padavejas.id
-						WHERE uzsakymo_patiekalas.busena < 3
-                        ORDER BY uzsakymo_patiekalas.busena DESC";
+						WHERE uzsakymo_patiekalas.fk_busena < 3
+                        ORDER BY uzsakymo_patiekalas.fk_busena DESC";
 
             //echo $query;
 
@@ -74,7 +80,7 @@
 		}
 
 		function insertOrderDish($orderId, $dish, $comment) {
-			$query = "  INSERT INTO uzsakymo_patiekalas (komentaras, fk_uzsakymas, fk_patiekalas, busena) 
+			$query = "  INSERT INTO uzsakymo_patiekalas (komentaras, fk_uzsakymas, fk_patiekalas, fk_busena) 
                         VALUES(?, ?, ?, 1)";
             $stmt = mysqli_prepare($this->database, $query);
             
@@ -84,7 +90,7 @@
 		}
 
         function cancelDish($dishId) {
-            $query = "  UPDATE uzsakymo_patiekalas SET busena = 4 WHERE id = ?";
+            $query = "  UPDATE uzsakymo_patiekalas SET fk_busena = 4 WHERE id = ?";
             $stmt = mysqli_prepare($this->database, $query);
             
             mysqli_stmt_bind_param($stmt, 'i', $dishId);
@@ -93,7 +99,7 @@
         }
 
         function produceDish($dishId) {
-            $query = "  UPDATE uzsakymo_patiekalas SET busena = 2 WHERE id = ?";
+            $query = "  UPDATE uzsakymo_patiekalas SET fk_busena = 2 WHERE id = ?";
             $stmt = mysqli_prepare($this->database, $query);
             
             mysqli_stmt_bind_param($stmt, 'i', $dishId);
@@ -102,7 +108,7 @@
         }
 
         function finishDish($dishId) {
-            $query = "  UPDATE uzsakymo_patiekalas SET busena = 3 WHERE id = ?";
+            $query = "  UPDATE uzsakymo_patiekalas SET fk_busena = 3 WHERE id = ?";
             $stmt = mysqli_prepare($this->database, $query);
             
             mysqli_stmt_bind_param($stmt, 'i', $dishId);
@@ -111,7 +117,7 @@
         }
 
         function cancelDishes($orderId) {
-            $query = "  UPDATE uzsakymo_patiekalas SET busena = 4 WHERE fk_uzsakymas = ? AND busena = 1";
+            $query = "  UPDATE uzsakymo_patiekalas SET fk_busena = 4 WHERE fk_uzsakymas = ? AND fk_busena < 3";
             $stmt = mysqli_prepare($this->database, $query);
             
             mysqli_stmt_bind_param($stmt, 'i', $orderId);

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Patiekalo kūrimas</title>
+	<title>Užsakymo redagavimas</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="./Content/css/bootstrap.min.css">
@@ -20,7 +20,7 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label" for="staliukas">Staliukas</label>
 						<div class="col-md-4">
-							<select id="staliukas" name="staliukas" class="form-control" <?php echo  $order[0]['busena'] != 1 ? "disabled" : ""; ?>>
+							<select id="staliukas" name="staliukas" class="form-control" <?php echo  $order[0]['fk_busena'] != 1 ? "disabled" : ""; ?>>
 								<option value="-1">Pasirinkite staliuką</option>
 								<?php $selectedId = $order[0]['fk_staliukas']; ?>
 								<?php foreach($tableList as $table) {
@@ -37,10 +37,10 @@
 
 				<div class="col-md-12">
 					<label for="productTable">Patiekalai</label>
-					<button type=button id="addProductBtn" class="btn btn-primary" style="margin-left:20px;" <?php echo  $order[0]['busena'] != 1 ? "disabled" : ""; ?>>
+					<button type=button id="addProductBtn" class="btn btn-primary" style="margin-left:20px;" <?php echo  $order[0]['fk_busena'] != 1 ? "disabled" : ""; ?>>
 						Pridėti patiekalą
 					</button>
-					<button type=button id="completeOrderBtn" class="btn btn-primary pull-right" style="margin-right:20px;" <?php echo  $order[0]['busena'] != 1 ? "disabled" : ""; ?>>
+					<button type=button id="completeOrderBtn" class="btn btn-primary pull-right" style="margin-right:20px;" <?php echo  $order[0]['fk_busena'] != 1 ? "disabled" : ""; ?>>
 						Užbaigti užsakymą
 					</button>
 					<table style="margin-top:10px;" id="productTable" class="table">
@@ -107,7 +107,7 @@
 											</div>
 										</td>
 										<td>
-											<?php if ($dish['busena'] == 1) { ?>
+											<?php if ($dish['fk_busena'] < 3) { ?>
 												<div class="col-md-8 col-md-offset-1">
 													<button onclick="SomeDeleteRowFunction(this)" class="btn btn-warning" type="button">Atšaukti</button>
 												</div>
@@ -120,7 +120,7 @@
 						</tbody>
 					</table>
 				</div>
-				<div <?php echo  $order[0]['busena'] != 1 ? "hidden" : ""; ?> class="col-md-11 submitDiv">
+				<div <?php echo  $order[0]['fk_busena'] != 1 ? "hidden" : ""; ?> class="col-md-11 submitDiv">
 					<button class="btn btn-primary pull-right saveButton" type="submit">Saugoti</button></div>
 				</div>
 			</form>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 18, 2016 at 06:48 PM
+-- Generation Time: Dec 21, 2016 at 02:34 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -102,6 +102,13 @@ CREATE TABLE `padavejas` (
   `idarbinimo_data` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `padavejas`
+--
+
+INSERT INTO `padavejas` (`id`, `vardas`, `pavarde`, `adresas`, `saskaitos_numeris`, `telefonas`, `asmens_kodas`, `etatas`, `idarbinimo_data`) VALUES
+(1, 'Marius', 'Maraitis', 'asdd', '123456', '123456', '123456', 5, '2016-12-19 20:03:07');
+
 -- --------------------------------------------------------
 
 --
@@ -124,13 +131,48 @@ CREATE TABLE `padavejo_maistas` (
 
 CREATE TABLE `patiekalas` (
   `id` int(11) NOT NULL,
-  `pavadinimas` varchar(50) NOT NULL,
+  `pavadinimas` varchar(50) CHARACTER SET utf8 NOT NULL,
   `kaina` float NOT NULL,
   `sukurimo_data` datetime NOT NULL,
   `modifikavimo_data` datetime NOT NULL,
   `aktyvus` tinyint(1) NOT NULL,
-  `komentarai` text NOT NULL
+  `komentarai` text CHARACTER SET utf8 NOT NULL,
+  `fk_tipas` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `patiekalas`
+--
+
+INSERT INTO `patiekalas` (`id`, `pavadinimas`, `kaina`, `sukurimo_data`, `modifikavimo_data`, `aktyvus`, `komentarai`, `fk_tipas`) VALUES
+(1, 'Vištiena su grybais', 1.24, '2016-12-19 11:14:27', '2016-12-19 11:14:27', 1, '', 1),
+(10, 'Abrikosas', 5, '2016-12-19 14:46:46', '2016-12-19 14:46:46', 1, '', 1),
+(11, 'ananasas', 5, '2016-12-19 14:47:20', '2016-12-19 14:47:20', 1, '', 1),
+(12, 'Pyragas', 4, '2016-12-21 03:09:35', '2016-12-21 03:09:35', 1, 'Skanu', 1),
+(13, 'Ne Pyragas', 15, '2016-12-21 03:10:52', '2016-12-21 03:10:52', 1, '', 1),
+(14, 'Ne Pyragaitis', 15, '2016-12-21 03:11:38', '2016-12-21 03:11:38', 1, '', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `patiekalo_busena`
+--
+
+CREATE TABLE `patiekalo_busena` (
+  `id` int(11) NOT NULL,
+  `pavadinimas` varchar(32) NOT NULL,
+  `ivedimo_data` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `patiekalo_busena`
+--
+
+INSERT INTO `patiekalo_busena` (`id`, `pavadinimas`, `ivedimo_data`) VALUES
+(1, 'Pridėtas', '2016-12-21 04:08:38'),
+(2, 'Gaminamas', '2016-12-21 04:09:15'),
+(3, 'Pagamintas', '2016-12-21 04:09:15'),
+(4, 'Atšauktas', '2016-12-21 04:09:24');
 
 -- --------------------------------------------------------
 
@@ -140,10 +182,24 @@ CREATE TABLE `patiekalas` (
 
 CREATE TABLE `patiekalo_produktas` (
   `id` int(11) NOT NULL,
-  `kiekis` int(11) NOT NULL,
+  `kiekis` float NOT NULL,
   `fk_patiekalas` int(11) NOT NULL,
   `fk_produktas` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `patiekalo_produktas`
+--
+
+INSERT INTO `patiekalo_produktas` (`id`, `kiekis`, `fk_patiekalas`, `fk_produktas`) VALUES
+(3, 0, 10, 1),
+(4, 3, 10, 3),
+(5, 0.2, 11, 1),
+(6, 3, 11, 3),
+(7, 2, 12, 1),
+(8, 5, 12, 3),
+(9, 15, 13, 1),
+(10, 15, 14, 1);
 
 -- --------------------------------------------------------
 
@@ -156,6 +212,13 @@ CREATE TABLE `patiekalo_tipas` (
   `pavadinimas` varchar(20) NOT NULL,
   `ivedimo_data` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `patiekalo_tipas`
+--
+
+INSERT INTO `patiekalo_tipas` (`id`, `pavadinimas`, `ivedimo_data`) VALUES
+(1, 'Vištiena', '2016-12-19 11:18:15');
 
 -- --------------------------------------------------------
 
@@ -179,7 +242,7 @@ CREATE TABLE `prisijungimu_istorija` (
 
 CREATE TABLE `produktas` (
   `id` int(11) NOT NULL,
-  `pavadinimas` varchar(50) NOT NULL,
+  `pavadinimas` varchar(50) CHARACTER SET utf8 NOT NULL,
   `kaina` float NOT NULL,
   `sukurimo_data` datetime NOT NULL,
   `svoris` float NOT NULL,
@@ -192,7 +255,8 @@ CREATE TABLE `produktas` (
 --
 
 INSERT INTO `produktas` (`id`, `pavadinimas`, `kaina`, `sukurimo_data`, `svoris`, `Galiojimo_laikas`, `komentarai`) VALUES
-(1, 'Miltai', 2, '2016-12-18 20:05:14', 1, 0, '');
+(1, 'Miltai', 2, '2016-12-18 20:05:14', 1, 0, ''),
+(3, 'Kiaušiniai', 2, '2016-12-18 20:05:14', 1, 0, '');
 
 -- --------------------------------------------------------
 
@@ -216,9 +280,12 @@ CREATE TABLE `produktu_uzsakymas` (
 --
 
 INSERT INTO `produktu_uzsakymas` (`id`, `ivedimo_data`, `kiekis`, `pristatymo_data`, `komentarai`, `redagavimo_data`, `fk_produktas`, `fk_busena`) VALUES
-(1, '2016-12-18 20:06:29', 5, '2016-12-01 00:00:00', '', '2016-12-01 00:00:00', 1, 1),
-(2, '2016-12-18 20:06:29', 5, '2016-12-01 00:00:00', '', '2016-12-01 00:00:00', 1, 1),
-(3, '2016-12-18 20:06:29', 5, '2016-12-01 00:00:00', '', '2016-12-01 00:00:00', 1, 1);
+(1, '2016-12-18 20:06:29', 5, '2016-12-01 00:00:00', '', '2016-12-01 00:00:00', 1, 2),
+(2, '2016-12-18 20:06:29', 5, '2016-12-01 00:00:00', '', '2016-12-01 00:00:00', 1, 3),
+(3, '2016-12-18 20:06:29', 5, '2016-12-01 00:00:00', '', '2016-12-01 00:00:00', 1, 2),
+(4, '2016-12-19 00:15:35', 10, '2016-12-19 00:15:35', 'asdasd', '2016-12-19 00:15:35', 1, 1),
+(5, '2016-12-19 00:16:31', 10, '2016-12-19 00:16:31', '', '2016-12-19 00:16:31', 3, 2),
+(6, '2016-12-19 00:16:49', 3, '2016-12-19 00:16:49', 'Reikės daugiau', '2016-12-19 00:16:49', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -237,7 +304,9 @@ CREATE TABLE `produktu_uzsakymo_busena` (
 --
 
 INSERT INTO `produktu_uzsakymo_busena` (`id`, `pavadinimas`, `ivedimo_data`) VALUES
-(1, 'sukurtas', '2016-12-18 20:04:43');
+(1, 'Sukurtas', '2016-12-18 20:04:43'),
+(2, 'Patvirtintas', '2016-12-21 03:24:53'),
+(3, 'Atmestas', '2016-12-21 03:25:11');
 
 -- --------------------------------------------------------
 
@@ -330,6 +399,14 @@ CREATE TABLE `staliukas` (
   `fk_padavejas` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `staliukas`
+--
+
+INSERT INTO `staliukas` (`staliuko_indentifikatorius`, `vietu_skaicius`, `ar_aktyvus`, `fk_padavejas`) VALUES
+('10', 4, 1, 1),
+('11', 4, 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -340,10 +417,38 @@ CREATE TABLE `uzsakymas` (
   `id` int(11) NOT NULL,
   `data` datetime NOT NULL,
   `komentarai` text,
-  `busena` int(11) NOT NULL,
+  `fk_busena` int(11) NOT NULL,
   `uzsakymo_pabaiga` datetime DEFAULT NULL,
   `fk_staliukas` varchar(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `uzsakymas`
+--
+
+INSERT INTO `uzsakymas` (`id`, `data`, `komentarai`, `fk_busena`, `uzsakymo_pabaiga`, `fk_staliukas`) VALUES
+(13, '2016-12-21 04:25:07', NULL, 2, '2016-12-21 04:32:46', '10'),
+(14, '2016-12-21 04:33:41', NULL, 2, '2016-12-21 04:33:51', '10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `uzsakymo_busena`
+--
+
+CREATE TABLE `uzsakymo_busena` (
+  `id` int(11) NOT NULL,
+  `pavadinimas` varchar(32) NOT NULL,
+  `ivedimo_data` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `uzsakymo_busena`
+--
+
+INSERT INTO `uzsakymo_busena` (`id`, `pavadinimas`, `ivedimo_data`) VALUES
+(1, 'Vykdomas', '2016-12-21 04:12:21'),
+(2, 'Užbaigtas', '2016-12-21 04:12:21');
 
 -- --------------------------------------------------------
 
@@ -353,10 +458,21 @@ CREATE TABLE `uzsakymas` (
 
 CREATE TABLE `uzsakymo_patiekalas` (
   `id` int(11) NOT NULL,
-  `kiekis` int(11) NOT NULL,
   `fk_patiekalas` int(11) NOT NULL,
-  `fk_uzsakymas` int(11) NOT NULL
+  `fk_uzsakymas` int(11) NOT NULL,
+  `fk_busena` int(11) NOT NULL,
+  `komentaras` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `uzsakymo_patiekalas`
+--
+
+INSERT INTO `uzsakymo_patiekalas` (`id`, `fk_patiekalas`, `fk_uzsakymas`, `fk_busena`, `komentaras`) VALUES
+(17, 10, 13, 4, ''),
+(18, 10, 13, 4, 'Svarbu'),
+(19, 10, 14, 4, ''),
+(20, 11, 14, 4, '');
 
 -- --------------------------------------------------------
 
@@ -382,7 +498,9 @@ INSERT INTO `vartotojas` (`id`, `vartotojo_vardas`, `slaptazodis`, `vartotojo_ti
 (1, 'tadrad', '1a1dc91c907325c69271ddf0c944bc72', 1, 1, '2016-12-18 13:00:00', 0),
 (2, 'Rokkac', '1a1dc91c907325c69271ddf0c944bc72', 1, 6, '2016-12-18 13:00:00', 0),
 (3, 'admin1', '1a1dc91c907325c69271ddf0c944bc72', 9, 1, '2016-12-18 13:00:00', 0),
-(4, 'admin2', '1a1dc91c907325c69271ddf0c944bc72', 9, 2, '2016-12-18 15:00:00', 0);
+(4, 'admin2', '1a1dc91c907325c69271ddf0c944bc72', 9, 2, '2016-12-18 15:00:00', 0),
+(5, 'cook', '1a1dc91c907325c69271ddf0c944bc72', 3, -1, '2016-12-18 22:42:21', 0),
+(6, 'padav', '1a1dc91c907325c69271ddf0c944bc72', 5, 1, '2016-12-19 20:02:25', 0);
 
 --
 -- Indexes for dumped tables
@@ -422,6 +540,18 @@ ALTER TABLE `padavejo_maistas`
 -- Indexes for table `patiekalas`
 --
 ALTER TABLE `patiekalas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `patiekalo_busena`
+--
+ALTER TABLE `patiekalo_busena`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `patiekalo_produktas`
+--
+ALTER TABLE `patiekalo_produktas`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -491,6 +621,12 @@ ALTER TABLE `uzsakymas`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `uzsakymo_busena`
+--
+ALTER TABLE `uzsakymo_busena`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `uzsakymo_patiekalas`
 --
 ALTER TABLE `uzsakymo_patiekalas`
@@ -526,7 +662,7 @@ ALTER TABLE `klientas`
 -- AUTO_INCREMENT for table `padavejas`
 --
 ALTER TABLE `padavejas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `padavejo_maistas`
 --
@@ -536,12 +672,22 @@ ALTER TABLE `padavejo_maistas`
 -- AUTO_INCREMENT for table `patiekalas`
 --
 ALTER TABLE `patiekalas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT for table `patiekalo_busena`
+--
+ALTER TABLE `patiekalo_busena`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `patiekalo_produktas`
+--
+ALTER TABLE `patiekalo_produktas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `patiekalo_tipas`
 --
 ALTER TABLE `patiekalo_tipas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `prisijungimu_istorija`
 --
@@ -551,17 +697,17 @@ ALTER TABLE `prisijungimu_istorija`
 -- AUTO_INCREMENT for table `produktas`
 --
 ALTER TABLE `produktas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `produktu_uzsakymas`
 --
 ALTER TABLE `produktu_uzsakymas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `produktu_uzsakymo_busena`
 --
 ALTER TABLE `produktu_uzsakymo_busena`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `restoranas`
 --
@@ -586,17 +732,22 @@ ALTER TABLE `rezervacijos_valandos`
 -- AUTO_INCREMENT for table `uzsakymas`
 --
 ALTER TABLE `uzsakymas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT for table `uzsakymo_busena`
+--
+ALTER TABLE `uzsakymo_busena`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `uzsakymo_patiekalas`
 --
 ALTER TABLE `uzsakymo_patiekalas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `vartotojas`
 --
 ALTER TABLE `vartotojas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

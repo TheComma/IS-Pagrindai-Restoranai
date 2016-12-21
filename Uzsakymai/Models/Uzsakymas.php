@@ -7,14 +7,17 @@
         }
 
         function getOrder($id) {
-             $query = " SELECT uzsakymas.*, padavejas.vardas AS padVardas, padavejas.pavarde AS padPavarde
+             $query = " SELECT uzsakymas.*, padavejas.vardas AS padVardas, padavejas.pavarde AS padPavarde,
+                                uzsakymo_busena.pavadinimas AS busena
 						FROM uzsakymas
 						INNER JOIN staliukas
 							ON staliukas.staliuko_indentifikatorius=uzsakymas.fk_staliukas
 						INNER JOIN padavejas
 							ON staliukas.fk_padavejas=padavejas.id
+                        INNER JOIN uzsakymo_busena
+							ON uzsakymas.fk_busena=uzsakymo_busena.id
                         WHERE uzsakymas.id=$id
-                        ORDER BY data ASC";
+                        ORDER BY fk_busena ASC";
 
             //echo $query;
 
@@ -33,13 +36,16 @@
         }
 
         function getOrders($page = null, $count = null){
-            $query = "  SELECT uzsakymas.*, padavejas.vardas AS padVardas, padavejas.pavarde AS padPavarde
+            $query = "  SELECT uzsakymas.*, padavejas.vardas AS padVardas, padavejas.pavarde AS padPavarde, 
+                                uzsakymo_busena.pavadinimas AS busena
 						FROM uzsakymas
 						INNER JOIN staliukas
 							ON staliukas.staliuko_indentifikatorius=uzsakymas.fk_staliukas
 						INNER JOIN padavejas
 							ON staliukas.fk_padavejas=padavejas.id
-                        ORDER BY busena ASC, data ASC";
+                        INNER JOIN uzsakymo_busena
+							ON uzsakymas.fk_busena=uzsakymo_busena.id
+                        ORDER BY fk_busena ASC, data ASC";
 
             //echo $query;
 
@@ -80,7 +86,7 @@
         }
 
         function newOrder($table) {
-            $query = "  INSERT INTO uzsakymas (data, busena, fk_staliukas) 
+            $query = "  INSERT INTO uzsakymas (data, fk_busena, fk_staliukas) 
                         VALUES(NOW(), 1, ?)";
             $stmt = mysqli_prepare($this->database, $query);
             
@@ -99,7 +105,7 @@
         }
 
         function completeOrder($orderid) {
-            $query = "  UPDATE uzsakymas SET busena = 2, uzsakymo_pabaiga = NOW() WHERE id = ?";
+            $query = "  UPDATE uzsakymas SET fk_busena = 2, uzsakymo_pabaiga = NOW() WHERE id = ?";
             $stmt = mysqli_prepare($this->database, $query);
             
             mysqli_stmt_bind_param($stmt, 'i',  $orderid);

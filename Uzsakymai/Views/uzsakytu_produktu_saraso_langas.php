@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Klientų registracija</title>
+	<title>Užsakytų produktų sąrašas</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="./Content/css/bootstrap.min.css">
@@ -25,12 +25,28 @@
 						<th>Produktas</th>
 						<th>Kiekis</th>
 						<th>Būsena</th>
+						<th></th>
+						<th></th>
 					</tr>
 					<?php foreach($orders as $order) { ?>
 						<tr>
-							<td><?php echo $order['produktoPav'] ?></td>
+							<td>
+								<input class="orderId" type="text" hidden disabled value="<?php echo $order['id']; ?>"/>
+								<?php echo $order['produktoPav'] ?>
+							</td>
 							<td><?php echo $order['kiekis'] ?></td>
 							<td><?php echo $order['busena'] ?></td>
+							<td>
+								<?php if ($_SESSION['userType'] == ADMIN_LEVEL && $order['busena'] == "Sukurtas") { ?>
+										<button class="btn btn-primary confirmButton" type="button">Tvirtinti</button>
+								<?php } ?>
+							</td>
+							
+							<td>
+								<?php if ($_SESSION['userType'] == ADMIN_LEVEL && $order['busena'] == "Sukurtas") { ?>
+										<button class="btn btn-primary cancelButton" type="button">Atmesti</button>
+								<?php } ?>
+							</td>
 						</tr>
 					<?php } ?>
 				</table>
@@ -49,8 +65,36 @@
 	</div>
 	<script>
         $(document).ready(function(){
-            $("#myBtn").click(function(){
-                window.location.href = "produktu_uzsakymas.php";
+            $(".confirmButton").click(function(){
+               var id = $(this).closest('tr').find(".orderId").val();
+
+				dataid = "id="+id+"&status=2";
+				//console.log(id);
+				$.ajax({
+					type: "POST",
+					url: "./Ajax_Requests/OrderStatus.php",
+					data: dataid,
+					cache: false,
+					success: function(data){
+						window.location.href =  window.location.href;
+					}
+				});
+            });
+
+			 $(".cancelButton").click(function(){
+               var id = $(this).closest('tr').find(".orderId").val();
+
+				dataid = "id="+id+"&status=3";
+				//console.log(id);
+				$.ajax({
+					type: "POST",
+					url: "./Ajax_Requests/OrderStatus.php",
+					data: dataid,
+					cache: false,
+					success: function(data){
+						window.location.href =  window.location.href;
+					}
+				});
             });
         });
     </script>

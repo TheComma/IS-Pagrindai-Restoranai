@@ -18,6 +18,7 @@
                 <?php if($_SESSION["userType"] == 3) { ?>
                     <!-- Parts for the kitchen -->
                     <li><a href="./uzsakytu_produktu_sarasas.php">Produktų užsakymai</a></li>
+                    <li><a href="./gaminami_patiekalai.php">Patiekalų gamyba</a></li>
                 <?php } ?>
 
                 <?php if($_SESSION["userType"] == 5) { ?>

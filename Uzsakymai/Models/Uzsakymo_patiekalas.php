@@ -33,6 +33,38 @@
             return $dbarray;
         }
 
+        function getCurrentOrders() {
+            $query = "  SELECT uzsakymo_patiekalas.*, patiekalas.pavadinimas,
+                            staliukas.staliuko_indentifikatorius AS staliukoPav,
+                            padavejas.vardas AS padavejoVardas, padavejas.pavarde AS padavejoPavarde
+                        FROM uzsakymo_patiekalas
+                        INNER JOIN patiekalas
+                            ON fk_patiekalas=patiekalas.id
+                        INNER JOIN uzsakymas
+                            ON fk_uzsakymas=uzsakymas.id
+                        INNER JOIN staliukas
+                            ON fk_staliukas=staliuko_indentifikatorius
+                        INNER JOIN padavejas
+                            ON fk_padavejas=padavejas.id
+						WHERE uzsakymo_patiekalas.busena < 3
+                        ORDER BY uzsakymo_patiekalas.busena DESC";
+
+            //echo $query;
+
+            $result = mysqli_query($this->database, $query);
+
+            if (!$result || (mysqli_num_rows($result) < 1)) {
+                return NULL;
+            }
+
+            $dbarray = array();
+            while ($order = mysqli_fetch_assoc($result)){
+                $dbarray[] = $order;
+            }
+
+            return $dbarray;
+        }
+
 		function insertOrderDishes($orderId, $dishes, $comments) {
 			if (count($dishes) > 0) {
 				foreach ($dishes as $key => $dish) {
@@ -52,6 +84,24 @@
 		}
 
         function cancelDish($dishId) {
+            $query = "  UPDATE uzsakymo_patiekalas SET busena = 4 WHERE id = ?";
+            $stmt = mysqli_prepare($this->database, $query);
+            
+            mysqli_stmt_bind_param($stmt, 'i', $dishId);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
+
+        function produceDish($dishId) {
+            $query = "  UPDATE uzsakymo_patiekalas SET busena = 2 WHERE id = ?";
+            $stmt = mysqli_prepare($this->database, $query);
+            
+            mysqli_stmt_bind_param($stmt, 'i', $dishId);
+            mysqli_stmt_execute($stmt);
+            mysqli_stmt_close($stmt);
+        }
+
+        function finishDish($dishId) {
             $query = "  UPDATE uzsakymo_patiekalas SET busena = 3 WHERE id = ?";
             $stmt = mysqli_prepare($this->database, $query);
             
@@ -61,7 +111,7 @@
         }
 
         function cancelDishes($orderId) {
-            $query = "  UPDATE uzsakymo_patiekalas SET busena = 3 WHERE fk_uzsakymas = ? AND busena = 1";
+            $query = "  UPDATE uzsakymo_patiekalas SET busena = 4 WHERE fk_uzsakymas = ? AND busena = 1";
             $stmt = mysqli_prepare($this->database, $query);
             
             mysqli_stmt_bind_param($stmt, 'i', $orderId);

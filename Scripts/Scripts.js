@@ -16,6 +16,23 @@ $(document).ready(function(){
     }
   })
 });
+$(document).on('click','#getData',function(){
+  var start = $("#start").val();
+  var end = $('#end').val();
+  var rest = $('#restaurant').val();
+  var datastring = "start="+start+"&end="+end+"&rest="+rest;
+  if(start != "" && end != ""){
+    $.ajax({
+      type : "POST",
+      url: "./Ajax_Requests/rezervavimu_ataskaitos.php",
+      data: datastring,
+      cache: false,
+      success: function(result){
+        $('#landing').html(result);
+      }
+    });
+  }
+});
 
 function DeleteReservation(id){
   dataid = "id="+id;

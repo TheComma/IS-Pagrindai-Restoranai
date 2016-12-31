@@ -26,7 +26,7 @@
 					} ?>
 				</select>
 				<?php if ( isset($errors['produktas']) ) {
-					echo '<p class="text-danger"> * ' . $errors['produktas'] . '</p>';
+					echo '<p class="text-danger"> * ' . $errors['produktas'][0][0] . '</p>';
 				} ?>
 			</div>
 		</div>
@@ -38,7 +38,7 @@
 				<input id="kiekis" name="kiekis" type="text" placeholder="kiekis" class="form-control" 
 						value="<?php echo isset($values['kiekis']) ? htmlspecialchars($values['kiekis']) : "";?>">
 				<?php if ( isset($errors['kiekis']) ) {
-					echo '<p class="text-danger"> * ' . $errors['kiekis'] . '</p>';
+					echo '<p class="text-danger"> * ' . $errors['kiekis'][0][0] . '</p>';
 				} ?>
 			</div>
 		</div>
@@ -51,7 +51,7 @@
 					 echo isset($values['komentaras']) ? htmlspecialchars($values['komentaras']) : "";
 				?></textarea>
 				<?php if ( isset($errors['komentaras']) ) {
-					echo '<p class="text-danger"> * ' . $errors['komentaras'] . '</p>';
+					echo '<p class="text-danger"> * ' . $errors['komentaras'][0][0] . '</p>';
 				} ?>
 			</div>
 		</div>

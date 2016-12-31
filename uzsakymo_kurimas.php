@@ -8,22 +8,10 @@
 
 	$dbc = connect();
 
-	function isfloat($f) {
-		return ($f == (string)(float)$f);
-	}
-
-	function validate_post(&$errors, &$values){
-		if ( isset($_POST['staliukas']) ){
-			$values['staliukas'] = $_POST['staliukas'];
-
-			if (intval($_POST['staliukas']) === -1) {
-				$errors['staliukas'] = "Prašome pasirinkti staliuką";
-			}
-		} else {
+	function validate_post(&$errors, $values){
+		if (intval($values['staliukas']) == -1) {
 			$errors['staliukas'] = "Prašome pasirinkti staliuką";
-		}
-
-		return (count($errors)  == 0);		
+		}	
 	}
 
 	// User logged in and with required privileges
@@ -33,7 +21,7 @@
 		$orders = new Uzsakymas($dbc);
 
 		$errors = array();
-		$values = array();
+		$values = $_POST;
 
 		// Form submit
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {

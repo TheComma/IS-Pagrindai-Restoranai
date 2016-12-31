@@ -1,51 +1,34 @@
 <?php
 	require_once("Includes/config.php");
 	require_once("Includes/functions.php");
+
+	//Models
 	require_once("Uzsakymai/Models/Produktu_uzsakymas.php");
 	require_once("Uzsakymai/Models/Produktas.php");
+
+	//Validation
+	require_once("Includes/Validation/ValidationHandler.php");
+	require_once("Includes/Validation/Numeric.php");
+	require_once("Includes/Validation/Between.php");
 
 	session_start();
 
 	$dbc = connect();
 
-	function isfloat($f) {
-		return ($f == (string)(float)$f);
-	}
+	function getValidator() {
+		$handler = new ValidationHandler();
 
-	function validate_post(&$errors, &$values){
-		if ( isset($_POST['produktas']) ){
-			$values['produktas'] = $_POST['produktas'];
+		$handler->addField('produktas', true, "Prašome pasirinkti produktą");
+		$handler->addFieldValidator('produktas', new Validator_Numeric("Prašome pasirinkti produktą"));
+		$handler->addFieldValidator('produktas', new Validator_Between("Prašome pasirinkti produktą", 0));
 
-			if (ctype_digit($_POST['produktas'])) {
-				if (intval([$_POST['produktas']]) < 0 ) {
-					$errors['produktas'] = "Prašome pasirinkti produktą";
-				}
-			} else {
-				$errors['produktas'] = "Prašome pasirinkti produktą";
-			}
-		} else {
-			$errors['produktas'] = "Prašome pasirinkti produktą";
-		}
+		$handler->addField('kiekis', true, "Prašome įvesti kiekį");
+		$handler->addFieldValidator('kiekis', new Validator_Numeric("Kiekis turi būti skaičius"));
+		$handler->addFieldValidator('kiekis', new Validator_Between("Kiekis negali būti neigiamas", 0));
 
-		if ( isset($_POST['kiekis']) && !empty(($_POST['kiekis'])) ){
-			$values['kiekis'] = $_POST['kiekis'];
+		//$handler->addField('komentaras', true, "Komentaras turi egzistuoti");
 
-			if ( isfloat($_POST['kiekis']) ) {
-				if (floatval([$_POST['kiekis']]) < 0 ) {
-					$errors['kiekis'] = "Kiekis negali būti neigiamas";
-				}
-			} else {
-				$errors['kiekis'] = "Kiekis turi būti skaičius";
-			}
-		} else {
-			$errors['kiekis'] = "Prašome įvesti kiekį";
-		}
-
-		if ( isset($_POST['komentaras']) ){
-			$values['komentaras'] = $_POST['komentaras'];
-		}
-
-		return (count($errors)  == 0);		
+		return $handler;
 	}
 
 	// User logged in and with required privileges
@@ -54,15 +37,21 @@
 		$productOrder = new Produktu_uzsakymas($dbc);
 
 		$errors = array();
-		$values = array();
+		$values = $_POST;
 
 		// Form submit
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-			if ( validate_post($errors, $values) ) {
+			$validationHandler = getValidator();
+			$validationHandler->setParams($values);
+
+			if ( $validationHandler->isValid() ) {
 				$productOrder->newOrder($values['produktas'], $values['kiekis'], $values['komentaras']);
 				redirect("uzsakytu_produktu_sarasas.php");
 			}
+
+			$errors = $validationHandler->getErrors();
+			//var_dump($errors);
 		}
 
 		$products = new Produktas($dbc);

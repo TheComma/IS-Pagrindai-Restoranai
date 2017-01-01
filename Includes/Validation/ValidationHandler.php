@@ -1,12 +1,7 @@
 <?php
 	class ValidationHandler {
-		protected $paramArray = null;
 		protected $errors = array();
 		protected $validators = array();
-
-		public function setParams($paramArray) {
-			$this->paramArray = $paramArray;
-		}
 
 		public function getErrors() {
 			return $this->errors;
@@ -26,7 +21,7 @@
 			$this->validators[$fieldName]['validators'] = array();
 		}
 
-		public function addFieldValidator($fieldName, $validator, $breakChain = false) {
+		public function addFieldValidator($fieldName, $validator) {
 			if (!is_subclass_of($validator, "ValidatorAbstract")) {
 				throw new Exception("Validator must be a subclass of ValidatorAbstract");
 			}
@@ -35,64 +30,64 @@
 				throw new Exception("Field {$fieldName} doesn't exist in addFieldValidator");
 			}
 
-			if (!is_bool($breakChain)) {
-				throw new Exception("Variable breakChain must be a boolean in addFieldValidator");
-			}
-
 			$this->validators[$fieldName]['validators'][] = $validator;
-			$this->validators[$fieldName]['breakChain'][] = $breakChain;
 		}
 
-		public function isValid() {
-			$valid = true;
+		public function isValid($paramArray) {
+			// clear the error array
 			$this->errors = array();
 
-			if (!isset($this->paramArray)) {
-				throw new Exception("Parameters not set in ValidatorAbstract, use setParams before calling isValid");
+			if (!isset($paramArray)) {
+				throw new Exception("Passed a null to isValid in ValidationHandler");
 			}
 
 			foreach ($this->validators as $fieldName => $field){
-
-				if (!isset($this->paramArray[$fieldName])) {
+				// If a field is not set
+				if (!isset($paramArray[$fieldName])) {
+					// If a missing field is required, raise an error
 					if ($field['required'] == true) {
 						$this->errors[$fieldName][] = $field['errorMessage'];
-						$valid = false;
 					}
+
+					// Skip validation of this field, as it's not set anyway
+					continue;
 				}
 
 				// If it is an array, iterate over every value of an array
-				if (is_array($this->paramArray[$fieldName])) {
-					foreach ($this->paramArray[$fieldName] as $key => $value) {
-						$valid = $this->isValidParam($fieldName, $field, $key, $value);
+				if (is_array($paramArray[$fieldName])) {
+					foreach ($paramArray[$fieldName] as $key => $value) {
+						$this->validateParam($fieldName, $field, $key, $value);
 					}
 				} else {
-					$valid = $this->isValidParam($fieldName, $field, 0, $this->paramArray[$fieldName]);
+					// If there is only one element, pass a paramKey of 0, as array starts at 0
+					$this->validateParam($fieldName, $field, 0, $paramArray[$fieldName]);
 				}
 			}
 
-			return $valid;
+			// If there are no errors
+			return count($this->errors) == 0;
 		}
 
-		protected function isValidParam($fieldName, $field, $paramKey, $value) {
-			// If a field is an empty string
-			if (mb_strlen(trim($value)) == 0 && $field['required'] == true) {
-				$this->errors[$fieldName][$paramKey][] = $field['errorMessage'];
-				return false;
-			}
+		protected function validateParam($fieldName, $field, $paramKey, $value) {
+			// If a field is an empty
+			if (mb_strlen(trim($value)) == 0) {
+				// If a field is required, set an error message and return false,
+				// else consider a field valid
+				if ($field['required'] == true) {
+					$this->errors[$fieldName][$paramKey] = $field['errorMessage'];
+				}
 
-			$valid = true ;
+				// No point in validating if it's empty
+				return;
+			}
 
 			// Iterate over all set validators
 			foreach($field['validators'] as $validatorkey => $validator) {
+				// If a field is invalid, get an error message and return false
 				if (!$validator->isValid($value)) {
-					$this->errors[$fieldName][$paramKey][] = $validator->getErrorMessage();
-					$valid = false;
-
-					if ($field['breakChain'][$validatorkey] == true) 
-						break;
+					$this->errors[$fieldName][$paramKey] = $validator->getErrorMessage();
+					return;
 				}
 			}
-
-			return $valid;
 		}
 	}

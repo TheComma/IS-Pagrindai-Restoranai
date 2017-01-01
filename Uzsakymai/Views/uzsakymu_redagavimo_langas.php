@@ -21,7 +21,6 @@
 						<label class="col-md-4 control-label" for="staliukas">Staliukas</label>
 						<div class="col-md-4">
 							<select id="staliukas" name="staliukas" class="form-control" <?php echo  $order[0]['fk_busena'] != 1 ? "disabled" : ""; ?>>
-								<option value="-1">Pasirinkite staliuką</option>
 								<?php $selectedId = $order[0]['fk_staliukas']; ?>
 								<?php foreach($tableList as $table) {
 									$selected = strcmp($selectedId, $table['staliuko_indentifikatorius']) == 0 ? " selected" : "";
@@ -29,7 +28,7 @@
 								} ?>
 							</select>
 							<?php if ( isset($errors['staliukas']) ) {
-								echo '<p class="text-danger"> * ' . $errors['staliukas'] . '</p>';
+								echo '<p class="text-danger"> * ' . $errors['staliukas'][0] . '</p>';
 							} ?>
 						</div>
 					</div>

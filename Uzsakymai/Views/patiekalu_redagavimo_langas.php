@@ -28,7 +28,7 @@
 								} ?>
 							</select>
 							<?php if ( isset($errors['patiekaloTipas']) ) {
-								echo '<p class="text-danger"> * ' . $errors['patiekaloTipas'] . '</p>';
+								echo '<p class="text-danger"> * ' . $errors['patiekaloTipas'][0] . '</p>';
 							} ?>
 						</div>
 					</div>
@@ -40,7 +40,7 @@
 							<input id="pavadinimas" name="pavadinimas" type="text" placeholder="pavadinimas" class="form-control" 
 									value="<?php echo isset($values['pavadinimas']) ? htmlspecialchars($values['pavadinimas']) : "";?>">
 							<?php if ( isset($errors['pavadinimas']) ) {
-								echo '<p class="text-danger"> * ' . $errors['pavadinimas'] . '</p>';
+								echo '<p class="text-danger"> * ' . $errors['pavadinimas'][0] . '</p>';
 							} ?>
 						</div>
 					</div>
@@ -52,7 +52,7 @@
 							<input id="kaina" name="kaina" type="text" placeholder="kaina" class="form-control" 
 									value="<?php echo isset($values['kaina']) ? htmlspecialchars($values['kaina']) : "";?>">
 							<?php if ( isset($errors['kaina']) ) {
-								echo '<p class="text-danger"> * ' . $errors['kaina'] . '</p>';
+								echo '<p class="text-danger"> * ' . $errors['kaina'][0] . '</p>';
 							} ?>
 						</div>
 					</div>
@@ -67,7 +67,7 @@
 								<option value="1" <?php echo $selectedid = 1 ? "selected" : "";?> >Aktyvus</option>;
 							</select>
 							<?php if ( isset($errors['aktyvus']) ) {
-								echo '<p class="text-danger"> * ' . $errors['aktyvus'] . '</p>';
+								echo '<p class="text-danger"> * ' . $errors['aktyvus'][0] . '</p>';
 							} ?>
 						</div>
 					</div>
@@ -80,7 +80,7 @@
 								echo isset($values['komentaras']) ? htmlspecialchars($values['komentaras']) : "";
 							?></textarea>
 							<?php if ( isset($errors['komentaras']) ) {
-								echo '<p class="text-danger"> * ' . $errors['komentaras'] . '</p>';
+								echo '<p class="text-danger"> * ' . $errors['komentaras'][0] . '</p>';
 							} ?>
 						</div>
 					</div>
@@ -121,44 +121,44 @@
 									</div>
 								</td>
 							</tr>
-
-							<?php foreach($values['produktas'] as $key => $produktoId) { ?>
-								<tr>
-									<td>
-										<div class="form-group">
-											<div class="col-md-12">
-												<select name="produktas[]" class="form-control">
-													<option value="-1">Pasirinkite produktą</option>
-													<?php foreach($productList as $product) {
-														$selected = $product['id'] == $produktoId ? " selected" : "";
-														echo '<option value = ' . $product['id'] . $selected . '>' .  htmlspecialchars($product['pavadinimas']) . '</option>';
+							<?php if (isset($values['produktas'])) { ?>
+								<?php foreach($values['produktas'] as $key => $produktoId) { ?>
+									<tr>
+										<td>
+											<div class="form-group">
+												<div class="col-md-12">
+													<select name="produktas[]" class="form-control">
+														<option value="-1">Pasirinkite produktą</option>
+														<?php foreach($productList as $product) {
+															$selected = $product['id'] == $produktoId ? " selected" : "";
+															echo '<option value = ' . $product['id'] . $selected . '>' .  htmlspecialchars($product['pavadinimas']) . '</option>';
+														} ?>
+													</select>
+													<?php if ( isset($errors['produktas'][$key]) ) {
+														echo '<p class="text-danger"> * ' . $errors['produktas'][$key] . '</p>';
 													} ?>
-												</select>
-												<?php if ( isset($errors['produktas'][$key]) ) {
-													echo '<p class="text-danger"> * ' . $errors['produktas'][$key] . '</p>';
-												} ?>
-											</div
-										</div>
-									</td>
-									<td>
-										<div class="form-group">
-											<div class="col-md-11 col-md-offset-1">
-												<input  name="kiekis[]" type="text" placeholder="kiekis" class="form-control" 
-													value="<?php echo htmlspecialchars($values['kiekis'][$key]); ?>">
-												<?php if ( isset($errors['kiekis'][$key]) ) {
-													echo '<p class="text-danger"> * ' . $errors['kiekis'][$key] . '</p>';
-												} ?>
+												</div
 											</div>
-										</div>
-									</td>
-									<td>
-										<div class="col-md-8 col-md-offset-1">
-											<button onclick="SomeDeleteRowFunction(this)" class="btn btn-warning removeButton" type="button">Pašalinti</button>
-										</div>
-									</td>
-								</tr>
-							<?php  } ?>
-
+										</td>
+										<td>
+											<div class="form-group">
+												<div class="col-md-11 col-md-offset-1">
+													<input  name="kiekis[]" type="text" placeholder="kiekis" class="form-control" 
+														value="<?php echo htmlspecialchars($values['kiekis'][$key]); ?>">
+													<?php if ( isset($errors['kiekis'][$key]) ) {
+														echo '<p class="text-danger"> * ' . $errors['kiekis'][$key] . '</p>';
+													} ?>
+												</div>
+											</div>
+										</td>
+										<td>
+											<div class="col-md-8 col-md-offset-1">
+												<button onclick="SomeDeleteRowFunction(this)" class="btn btn-warning removeButton" type="button">Pašalinti</button>
+											</div>
+										</td>
+									</tr>
+								<?php  } ?>
+							<?php } ?>
 						</tbody>
 					</table>
 				</div>

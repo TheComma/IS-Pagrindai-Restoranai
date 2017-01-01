@@ -1,6 +1,8 @@
 <?php
 	require_once("Includes/config.php");
 	require_once("Includes/functions.php");
+
+	// Models
 	require_once("Uzsakymai/Models/Staliukas.php");
 	require_once("Uzsakymai/Models/Uzsakymas.php");
 
@@ -11,7 +13,9 @@
 	function validate_post(&$errors, $values){
 		if (intval($values['staliukas']) == -1) {
 			$errors['staliukas'] = "Prašome pasirinkti staliuką";
-		}	
+		}
+
+		return count($errors) == 0;
 	}
 
 	// User logged in and with required privileges
@@ -22,6 +26,8 @@
 
 		$errors = array();
 		$values = $_POST;
+
+		var_dump($values);
 
 		// Form submit
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {

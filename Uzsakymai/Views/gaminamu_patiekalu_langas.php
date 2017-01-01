@@ -36,7 +36,7 @@
 										<button class="btn btn-primary produceButton" type="button">Gaminti</button>
 								<?php } else if ($order['fk_busena'] == 2) { ?>
 										<button class="btn btn-primary finishButton" type="button">Užbaigti</button>
-								<?php	} ?>
+								<?php } ?>
 							</td>
 							<td> 
 								<button class="btn btn-primary cancelButton" type="button">Atšaukti</button>

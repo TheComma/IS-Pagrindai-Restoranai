@@ -6,7 +6,7 @@
         @param pageCount - how many pages there are in total, int
         @param paramList - additional parameters to add to pagination hrefs, given as a single formated string
         @param pageCountPerSide - how many pages per side of current page to render, exlcluding the first one and last one, int
-        @param pagiantorClass - optional class for styling the paginator <div>
+        @param paginatorClass - optional class for styling the paginator <div>
     */
     function paginate($currentPage, $pageCount, $paramList, $pageCountPerSide, $paginatorClass = "") {
         $paginator  = '<div class="row pagination-row text-center {$paginatorClass}">';

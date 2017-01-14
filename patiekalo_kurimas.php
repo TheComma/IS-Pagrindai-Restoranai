@@ -72,7 +72,7 @@
 			unset($values['kiekis'][0]);
 
 			if ( $validationHandler->isValid($values) ) {
-				$dishes->newDish($values['patiekaloTipas'], 
+				$dishes->naujas_patiekalas($values['patiekaloTipas'], 
 									$values['pavadinimas'], 
 									$values['kaina'], 
 									$values['aktyvus'],
@@ -80,15 +80,15 @@
 
 				$dishId = $dishes->getLastInsertId();
 
-				$dishProducts->insertDishProducts($dishId, $values['produktas'], $values['kiekis']);
+				$dishProducts->irasyti_patiekalo_produktus($dishId, $values['produktas'], $values['kiekis']);
 				redirect("patiekalu_sarasas.php");
 			}
 
 			$errors = $validationHandler->getErrors();
 		}
 
-		$productList = $products->getProductList();
-		$dishTypeList = $dishTypes->getProductTypeList();
+		$productList = $products->isrinkti_produktus();
+		$dishTypeList = $dishTypes->isrinkti_patiekalu_tipus();
 
 		//var_dump($values);
 

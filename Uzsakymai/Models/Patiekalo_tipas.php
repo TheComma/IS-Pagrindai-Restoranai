@@ -6,7 +6,7 @@
             $this->database = $dbc;
         }
 
-        function getProductTypeList(){
+        function isrinkti_patiekalu_tipus(){
             $query = "  SELECT id, pavadinimas
                         FROM patiekalo_tipas
                         ORDER BY id";

@@ -6,7 +6,7 @@
             $this->database = $dbc;
         }
 
-		function insertDishProducts($dishId, $products, $amounts) {
+		function irasyti_patiekalo_produktus($dishId, $products, $amounts) {
 			if (count($products) > 0) {
 				foreach ($products as $key => $product) {
 					$this->insertDishProduct($dishId, $product, $amounts[$key]);

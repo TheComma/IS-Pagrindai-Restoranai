@@ -6,7 +6,7 @@
             $this->database = $dbc;
         }
 
-        function getDishesList($page = null, $count = null){
+        function isrinkti_patiekalus($page = null, $count = null){
             $query = "  SELECT patiekalas.*
                         FROM patiekalas
                         ORDER BY id";
@@ -47,7 +47,7 @@
             return $count['count'];
         }
 
-		function newDish($patiekaloTipas, $pavadinimas, $kaina, $aktyvus, $komentaras) {
+		function naujas_patiekalas($patiekaloTipas, $pavadinimas, $kaina, $aktyvus, $komentaras) {
 			$query = "  INSERT INTO patiekalas (pavadinimas, kaina, sukurimo_data,
                             modifikavimo_data, aktyvus, komentarai, fk_tipas) 
                         VALUES(?, ?, NOW(), NOW(), ?, ? , ?)";

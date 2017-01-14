@@ -6,7 +6,7 @@
             $this->database = $dbc;
         }
 
-        function getProductList($page = null, $count = null){
+        function isrinkti_produktus($page = null, $count = null){
             $query = "  SELECT produktas.*
                         FROM produktas
                         ORDER BY id";

@@ -45,7 +45,7 @@
 			$validationHandler = getValidator();
 			
 			if ( $validationHandler->isValid($values) ) {
-				$productOrder->newOrder($values['produktas'], $values['kiekis'], $values['komentaras']);
+				$productOrder->irasyti($values['produktas'], $values['kiekis'], $values['komentaras']);
 				redirect("uzsakytu_produktu_sarasas.php");
 			}
 
@@ -54,7 +54,7 @@
 
 		$products = new Produktas($dbc);
 
-		$productList = $products->getProductList();
+		$productList = $products->isrinkti_produktus();
 
 		include("Uzsakymai/Views/produktu_uzsakymo_langas.php");
 

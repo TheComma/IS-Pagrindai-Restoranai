@@ -6,7 +6,7 @@
             $this->database = $dbc;
         }
 
-        function getOrder($id) {
+        function isrinkti_duomenis($id) {
              $query = " SELECT uzsakymas.*, padavejas.vardas AS padVardas, padavejas.pavarde AS padPavarde,
                                 uzsakymo_busena.pavadinimas AS busena
 						FROM uzsakymas
@@ -85,7 +85,7 @@
             return $count['count'];
         }
 
-        function newOrder($table) {
+        function irasyti($table) {
             $query = "  INSERT INTO uzsakymas (data, fk_busena, fk_staliukas) 
                         VALUES(NOW(), 1, ?)";
             $stmt = mysqli_prepare($this->database, $query);
@@ -95,7 +95,7 @@
             mysqli_stmt_close($stmt);
         }
 
-        function updateOrder($id, $table) {
+        function atnaujinti($id, $table) {
             $query = "  UPDATE uzsakymas SET fk_staliukas = ? WHERE id = ?";
             $stmt = mysqli_prepare($this->database, $query);
             

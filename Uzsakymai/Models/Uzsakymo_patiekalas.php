@@ -6,7 +6,7 @@
             $this->database = $dbc;
         }
 
-		function getOrderDishes($order){
+		function isrinkti_uzsakymo_patiekalus($order){
             $query = "  SELECT uzsakymo_patiekalas.*, patiekalas.pavadinimas,
                             patiekalo_tipas.pavadinimas AS tipoPavadinimas,
                             patiekalo_busena.pavadinimas AS busena
@@ -71,7 +71,7 @@
             return $dbarray;
         }
 
-		function insertOrderDishes($orderId, $dishes, $comments) {
+		function irasyti_uzsakymo_patiekalus($orderId, $dishes, $comments) {
 			if (count($dishes) > 0) {
 				foreach ($dishes as $key => $dish) {
 					$this->insertOrderDish($orderId, $dish, $comments[$key]);
@@ -107,11 +107,11 @@
             mysqli_stmt_close($stmt);
         }
 
-        function finishDish($dishId) {
-            $query = "  UPDATE uzsakymo_patiekalas SET fk_busena = 3 WHERE id = ?";
+        function pakeisti_busena($dishId, $busena) {
+            $query = "  UPDATE uzsakymo_patiekalas SET fk_busena = ? WHERE id = ?";
             $stmt = mysqli_prepare($this->database, $query);
             
-            mysqli_stmt_bind_param($stmt, 'i', $dishId);
+            mysqli_stmt_bind_param($stmt, 'ii', $busena, $dishId);
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
         }

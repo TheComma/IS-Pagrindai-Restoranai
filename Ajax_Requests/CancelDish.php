@@ -7,5 +7,5 @@
 	if ( isset($_POST['id']) ) {
 		$orderDishes = new Uzsakymo_patiekalas($dbc);
 
-		$orderDishes->cancelDish($_POST['id']);
+		$orderDishes->pakeisti_busena($_POST['id'], 4);
 	}

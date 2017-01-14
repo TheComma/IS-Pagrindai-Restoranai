@@ -6,7 +6,7 @@
             $this->database = $dbc;
         }
 
-        function getTableList(){
+        function isrinkti_staliukus(){
             $query = "  SELECT *
                         FROM staliukas
                         ORDER BY staliuko_indentifikatorius";

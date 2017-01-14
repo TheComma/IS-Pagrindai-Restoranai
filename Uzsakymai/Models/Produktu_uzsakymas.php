@@ -52,7 +52,7 @@
             return $count['count'];
         }
 
-        function newOrder($product, $amount, $comment) {
+        function irasyti($product, $amount, $comment) {
             $query = "  INSERT INTO produktu_uzsakymas (ivedimo_data, pristatymo_data, redagavimo_data,
                             kiekis, komentarai, fk_produktas, fk_busena) 
                         VALUES(NOW(), NOW(), NOW(), ?, ?, ? , 1)";

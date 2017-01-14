@@ -16,7 +16,7 @@
 
     	$page = isset( $_GET['page'] ) ? $_GET['page'] : 1;
 
-		$dishes = $dishesList->getDishesList($page, $countPerPage);
+		$dishes = $dishesList->isrinkti_patiekalus($page, $countPerPage);
     	$dishesCount = $dishesList->getDishCount();
 		$pageCount = ceil($dishesCount/$countPerPage);
 

@@ -33,7 +33,7 @@
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 			if ( validate_post($errors, $values) ) {
-				$orders->newOrder($values['staliukas']);
+				$orders->irasyti($values['staliukas']);
 
 				$orderId = $orders->getLastInsertId();
 
@@ -41,7 +41,7 @@
 			}
 		}
 		
-		$tableList = $tables->getTableList();
+		$tableList = $tables->isrinkti_staliukus();
 
 		//var_dump($tableList);
 

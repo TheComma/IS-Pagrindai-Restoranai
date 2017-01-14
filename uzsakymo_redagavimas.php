@@ -59,20 +59,20 @@
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 			if ( $validationHandler->isValid($values) ) {
-				$orders->updateOrder($_GET['id'], $values['staliukas']);
+				$orders->atnaujinti($_GET['id'], $values['staliukas']);
 
-				$orderDishes->insertOrderDishes($_GET['id'], $values['patiekalas'], $values['komentaras']);
+				$orderDishes->irasyti_uzsakymo_patiekalus($_GET['id'], $values['patiekalas'], $values['komentaras']);
 			} else {
 				$errors = $validationHandler->getErrors();
 			}
 		}
 
-		$dishList = $dishes->getDishesList();
-		$tableList = $tables->getTableList();
+		$dishList = $dishes->isrinkti_patiekalus();
+		$tableList = $tables->isrinkti_staliukus();
 		
-		$order = $orders->getOrder($_GET['id']);
-		$dishTypeList = $dishTypes->getProductTypeList();
-		$orderedDishList = $orderDishes->getOrderDishes($_GET['id']);
+		$order = $orders->isrinkti_duomenis($_GET['id']);
+		$dishTypeList = $dishTypes->isrinkti_patiekalu_tipus();
+		$orderedDishList = $orderDishes->isrinkti_uzsakymo_patiekalus($_GET['id']);
 
 		include("Uzsakymai/Views/uzsakymu_redagavimo_langas.php");
 

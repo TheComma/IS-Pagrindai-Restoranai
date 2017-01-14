@@ -27,7 +27,7 @@
 		$errors = array();
 		$values = $_POST;
 
-		var_dump($values);
+		//var_dump($values);
 
 		// Form submit
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {

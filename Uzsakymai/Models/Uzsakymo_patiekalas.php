@@ -6,7 +6,7 @@
             $this->database = $dbc;
         }
 
-		function isrinkti_uzsakymo_patiekalus($order){
+		function isrinkti_uzsakytus_patiekalus($order){
             $query = "  SELECT uzsakymo_patiekalas.*, patiekalas.pavadinimas,
                             patiekalo_tipas.pavadinimas AS tipoPavadinimas,
                             patiekalo_busena.pavadinimas AS busena
@@ -88,24 +88,6 @@
             mysqli_stmt_execute($stmt);
             mysqli_stmt_close($stmt);
 		}
-
-        function cancelDish($dishId) {
-            $query = "  UPDATE uzsakymo_patiekalas SET fk_busena = 4 WHERE id = ?";
-            $stmt = mysqli_prepare($this->database, $query);
-            
-            mysqli_stmt_bind_param($stmt, 'i', $dishId);
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_close($stmt);
-        }
-
-        function produceDish($dishId) {
-            $query = "  UPDATE uzsakymo_patiekalas SET fk_busena = 2 WHERE id = ?";
-            $stmt = mysqli_prepare($this->database, $query);
-            
-            mysqli_stmt_bind_param($stmt, 'i', $dishId);
-            mysqli_stmt_execute($stmt);
-            mysqli_stmt_close($stmt);
-        }
 
         function pakeisti_busena($dishId, $busena) {
             $query = "  UPDATE uzsakymo_patiekalas SET fk_busena = ? WHERE id = ?";

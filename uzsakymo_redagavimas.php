@@ -72,7 +72,7 @@
 		
 		$order = $orders->isrinkti_duomenis($_GET['id']);
 		$dishTypeList = $dishTypes->isrinkti_patiekalu_tipus();
-		$orderedDishList = $orderDishes->isrinkti_uzsakymo_patiekalus($_GET['id']);
+		$orderedDishList = $orderDishes->isrinkti_uzsakytus_patiekalus($_GET['id']);
 
 		include("Uzsakymai/Views/uzsakymu_redagavimo_langas.php");
 

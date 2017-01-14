@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 25, 2016 at 07:00 PM
+-- Generation Time: Jan 14, 2017 at 10:59 AM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -60,9 +60,16 @@ CREATE TABLE `isdirbtas_laikas` (
   `pradzia` time NOT NULL,
   `pabaiga` time NOT NULL,
   `komentarai` text COLLATE utf8_unicode_ci,
-  `uzdarbis` float NOT NULL,
+  `uzdarbis` float DEFAULT NULL,
   `fk_padavejas` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `isdirbtas_laikas`
+--
+
+INSERT INTO `isdirbtas_laikas` (`id`, `data`, `pradzia`, `pabaiga`, `komentarai`, `uzdarbis`, `fk_padavejas`) VALUES
+(1, '2017-01-12', '08:00:00', '20:00:00', '12 darbo valandÅ³', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -113,7 +120,8 @@ CREATE TABLE `padavejas` (
 --
 
 INSERT INTO `padavejas` (`id`, `vardas`, `pavarde`, `adresas`, `saskaitos_numeris`, `telefonas`, `asmens_kodas`, `etatas`, `idarbinimo_data`) VALUES
-(1, 'Juozas', 'Juozaitis', 'Test g.5', 'LT109515912661985052156', '+37069852001', '39005257894', 1, '2016-12-14 00:00:00');
+(1, 'Juozas', 'Juozaitis', 'Test g.5', 'LT109515912661985052156', '+37069852001', '39005257894', 1, '2016-12-14 00:00:00'),
+(2, 'Tomas', 'Gargaliauskas', 'GatvÄ—s g. 15', 'LT6173000100886112', '+37061122587', '39012345674', 0.2, '2017-01-12 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -547,7 +555,8 @@ INSERT INTO `vartotojas` (`id`, `vartotojo_vardas`, `slaptazodis`, `vartotojo_ti
 (3, 'admin1', '1a1dc91c907325c69271ddf0c944bc72', 9, 1, '2016-12-18 13:00:00', 0),
 (4, 'admin2', '1a1dc91c907325c69271ddf0c944bc72', 9, 2, '2016-12-18 15:00:00', 0),
 (5, 'waiter1', '1a1dc91c907325c69271ddf0c944bc72', 5, 1, '2016-12-21 00:00:00', 0),
-(6, 'cook1', '1a1dc91c907325c69271ddf0c944bc72', 3, -1, '2016-12-21 11:25:19', 0);
+(6, 'cook1', '1a1dc91c907325c69271ddf0c944bc72', 3, -1, '2016-12-21 11:25:19', 0),
+(7, 'padav1', '1a1dc91c907325c69271ddf0c944bc72', 5, 2, '2017-01-14 10:52:31', 0);
 
 --
 -- Indexes for dumped tables
@@ -721,7 +730,7 @@ ALTER TABLE `administratorius`
 -- AUTO_INCREMENT for table `isdirbtas_laikas`
 --
 ALTER TABLE `isdirbtas_laikas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `klientas`
 --
@@ -731,7 +740,7 @@ ALTER TABLE `klientas`
 -- AUTO_INCREMENT for table `padavejas`
 --
 ALTER TABLE `padavejas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `padavejo_maistas`
 --
@@ -816,7 +825,7 @@ ALTER TABLE `uzsakymo_patiekalas`
 -- AUTO_INCREMENT for table `vartotojas`
 --
 ALTER TABLE `vartotojas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- Constraints for dumped tables
 --

@@ -20,12 +20,16 @@
                     <li><a href="./uzsakytu_produktu_sarasas.php">Produktų užsakymai</a></li>
                     <li><a href="./gaminami_patiekalai.php">Patiekalų gamyba</a></li>
                     <li><a href="./patiekalu_sarasas.php">Patiekalai</a></li>
+					<li><a href="./isdirbto_laiko_fiksavimas.php">Darbo valandų fiksavimas</a></li>
+					<li><a href="./suvalgytu_produktu_fiksavimas.php">Suvalgytų produktų fiksavimas</a></li>
                 <?php } ?>
 
                 <?php if($_SESSION["userType"] == 5) { ?>
                     <!-- Parts for the waiter -->
                     <li><a href="./uzsakymu_sarasas.php">Patiekalų užsakymai</a></li>
                     <li><a href="./padavejo_rezervacijos.php">Rezervacijos</a></li>
+					<li><a href="./isdirbto_laiko_fiksavimas.php">Darbo valandų fiksavimas</a></li>
+					<li><a href="./suvalgytu_produktu_fiksavimas.php">Suvalgytų produktų fiksavimas</a></li>
                 <?php } ?>
 
                 <?php if($_SESSION["userType"] == 9) { ?>
@@ -45,6 +49,9 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Personalas
                         <span class="caret"></span></a>
                         <ul class="dropdown-menu">
+							<li><a href="./darbuotoju_registracija.php">Registruoti naują darbuotoją</a></li>
+							<li><a href="./darbuotoju_trynimas.php">Šalinti darbuotoją iš sistemos</a></li>
+							<li><a href="./darbo_valandu_redagavimas.php">Redaguoti darbuotojo darbo valandas</a></li>
                         </ul>
                     </li>
 

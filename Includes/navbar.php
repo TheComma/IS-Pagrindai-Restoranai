@@ -69,6 +69,8 @@
                         <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="./rezervavimu_ataskaita.php">Rezervavimu Ataskaita</a></li>
+							<li><a href="./darbo_valandu_ataskaita.php">Darbo valandų ataskaita</a></li>
+							<li><a href="./suvartotu_produktu_ataskaita.php">Suvartotų produktų ataskaita</a></li>
                         </ul>
                     </li>
                 <?php } ?>

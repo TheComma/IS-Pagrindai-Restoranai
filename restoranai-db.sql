@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2017 at 10:59 AM
+-- Generation Time: Jan 14, 2017 at 10:04 PM
 -- Server version: 5.7.14
 -- PHP Version: 5.6.25
 
@@ -132,11 +132,18 @@ INSERT INTO `padavejas` (`id`, `vardas`, `pavarde`, `adresas`, `saskaitos_numeri
 DROP TABLE IF EXISTS `padavejo_maistas`;
 CREATE TABLE `padavejo_maistas` (
   `id` int(11) NOT NULL,
-  `data` datetime NOT NULL,
+  `data` date NOT NULL,
   `kiekis` int(11) NOT NULL,
   `fk_padavejas` int(11) NOT NULL,
   `fk_patiekalas` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `padavejo_maistas`
+--
+
+INSERT INTO `padavejo_maistas` (`id`, `data`, `kiekis`, `fk_padavejas`, `fk_patiekalas`) VALUES
+(1, '2017-01-15', 2, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -745,7 +752,7 @@ ALTER TABLE `padavejas`
 -- AUTO_INCREMENT for table `padavejo_maistas`
 --
 ALTER TABLE `padavejo_maistas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `patiekalas`
 --

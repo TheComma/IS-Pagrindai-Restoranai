@@ -16,6 +16,7 @@ $(document).ready(function(){
     }
   })
 });
+
 $(document).on('click','#getData',function(){
   var start = $("#start").val();
   var end = $('#end').val();
@@ -34,6 +35,41 @@ $(document).on('click','#getData',function(){
   }
 });
 
+$(document).on('click','#getData1',function(){
+  var start = $("#start").val();
+  var end = $('#end').val();
+  var vart = $('#vartotojas').val();
+  var datastring = "start="+start+"&end="+end+"&vart="+vart;
+  if(start != "" && end != ""){
+    $.ajax({
+      type : "POST",
+      url: "./Ajax_Requests/darbo_valandu_ataskaitos.php",
+      data: datastring,
+      cache: false,
+      success: function(result){
+        $('#landing1').html(result);
+      }
+    });
+  }
+});
+
+$(document).on('click','#getData2',function(){
+  var start = $("#start").val();
+  var end = $('#end').val();
+  var vart = $('#vartotojas').val();
+  var datastring = "start="+start+"&end="+end+"&vart="+vart;
+  if(start != "" && end != ""){
+    $.ajax({
+      type : "POST",
+      url: "./Ajax_Requests/suvartotu_produktu_ataskaitos.php",
+      data: datastring,
+      cache: false,
+      success: function(result){
+        $('#landing2').html(result);
+      }
+    });
+  }
+});
 function DeleteReservation(id){
   dataid = "id="+id;
   $.ajax({

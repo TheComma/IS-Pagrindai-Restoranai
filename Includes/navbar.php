@@ -29,7 +29,7 @@
                     <li><a href="./uzsakymu_sarasas.php">Patiekalų užsakymai</a></li>
                     <li><a href="./padavejo_rezervacijos.php">Rezervacijos</a></li>
 					<li><a href="./isdirbto_laiko_fiksavimas.php">Darbo valandų fiksavimas</a></li>
-					<li><a href="./suvalgytu_produktu_fiksavimas.php">Suvalgytų produktų fiksavimas</a></li>
+					<li><a href="./suvartotu_produktu_apskaita.php">Suvalgytų produktų fiksavimas</a></li>
                 <?php } ?>
 
                 <?php if($_SESSION["userType"] == 9) { ?>

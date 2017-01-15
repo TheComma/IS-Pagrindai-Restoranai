@@ -12,7 +12,7 @@
 			($_SESSION['userType'] == KITCHEN_LEVEL || $_SESSION['userType'] == ADMIN_LEVEL) ) {
 		$dishesList = new Patiekalas($dbc);
 
-		$countPerPage = 5;
+		$countPerPage = 10;
 
     	$page = isset( $_GET['page'] ) ? $_GET['page'] : 1;
 

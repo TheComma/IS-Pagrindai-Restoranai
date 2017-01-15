@@ -31,15 +31,23 @@
 							<td><?php echo $order['padavejoVardas'] . ' ' .  $order['padavejoPavarde'] ?></td>
 							<td style="text-wrap: normal;word-wrap: break-word;"><?php echo $order['komentaras'] ?></td>
 							<td>
-								<input class="orderId" type="text" hidden disabled value="<?php echo $order['id']; ?>"/>
-								<?php if ($order['fk_busena'] == 1) { ?>
-										<button class="btn btn-primary produceButton" type="button">Gaminti</button>
-								<?php } else if ($order['fk_busena'] == 2) { ?>
-										<button class="btn btn-primary finishButton" type="button">Užbaigti</button>
-								<?php } ?>
+								<form class="form" method="POST">
+									<input name="id" type="text" hidden  value="<?php echo $order['id']; ?>"/>
+									<?php if ($order['fk_busena'] == 1) { ?>
+										<input name="busena" type="text" hidden  value="2"/>
+										<button class="btn btn-primary produceButton" type="submit">Gaminti</button>
+									<?php } else if ($order['fk_busena'] == 2) { ?>
+										<input name="busena" type="text" hidden  value="3"/>
+										<button class="btn btn-primary finishButton" type="submit">Užbaigti</button>
+									<?php } ?>
+								</form>
 							</td>
 							<td> 
-								<button class="btn btn-primary cancelButton" type="button">Atšaukti</button>
+								<form class="form" method="POST">
+									<input name="id" type="text" hidden  value="<?php echo $order['id']; ?>"/>
+									<input name="busena" type="text" hidden value="4"/>
+									<button class="btn btn-primary cancelButton" type="submit">Atšaukti</button>
+								</form>
 							</td>
 						</tr>
 					<?php } ?>
@@ -50,56 +58,5 @@
 			</div>
 		</div>
 	</div>
-	<script>
-        $(document).ready(function(){
-            $(".produceButton").click(function(){
-                var id = $(this).closest('tr').find(".orderId").val();
-
-				dataid = "id="+id;
-				//console.log(id);
-				$.ajax({
-					type: "POST",
-					url: "./Ajax_Requests/ProduceDish.php",
-					data: dataid,
-					cache: false,
-					success: function(data){
-						window.location.href =  window.location.href;
-					}
-				})
-            });
-
-			$(".finishButton").click(function(){
-                var id = $(this).closest('tr').find(".orderId").val();
-
-				dataid = "id="+id;
-				//console.log(id);
-				$.ajax({
-					type: "POST",
-					url: "./Ajax_Requests/FinishDish.php",
-					data: dataid,
-					cache: false,
-					success: function(data){
-						window.location.href =  window.location.href;
-					}
-				})
-            });
-
-			$(".cancelButton").click(function(){
-                var id = $(this).closest('tr').find(".orderId").val();
-
-				dataid = "id="+id;
-				//console.log(id);
-				$.ajax({
-					type: "POST",
-					url: "./Ajax_Requests/CancelDish.php",
-					data: dataid,
-					cache: false,
-					success: function(data){
-						window.location.href =  window.location.href;
-					}
-				})
-            });
-        });
-    </script>
 </body>
 </html>

@@ -11,7 +11,7 @@
             <ul class="nav navbar-nav">
                 <?php if($_SESSION["userType"] == 1) { ?>
                      <!-- Parts for the client -->
-                    <li><a href="./CreateReservation.php">Rezervuoti Staliuką</a></li>
+                    <li><a href="./staliuko_rezervavimas.php">Rezervuoti Staliuką</a></li>
                     <li><a href="./vartotojo_rezervacijos.php">Vartotojo Rezervacijos</a></li>
                 <?php } ?>
 
@@ -39,9 +39,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Rezervacijos
                         <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="./CreateReservation.php">Rezervuoti Staliuką</a></li>
-                            <li><a href="./EditReservation.php">Redaguoti Rezervaciją</a></li>
-                            <li><a href="./admin_reservations.php">Rezervaciju valdymas</a></li>
+                            <li><a href="./rezervaciju_tvirtinimas.php">Rezervaciju valdymas</a></li>
                         </ul>
                     </li>
 

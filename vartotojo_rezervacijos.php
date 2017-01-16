@@ -62,7 +62,7 @@ $result = mysqli_query($dbc,$query);
         while ($row = mysqli_fetch_array($result, MYSQLI_NUM))
         {
         echo '<tr id='.$row[6].'>';
-        echo '<td>'.$row[0].'</td><td>'.$row[3].'</td><td>'.$row[4].' '.$row[5].'</td><td>'.$row[1].'</td><td>'.$row[2].'</td><td><a href="./EditReservation.php?id='.$row[6].'">Redaguoti</a></td><td><a onclick=DeleteReservation('.$row[6].')>Trinti</a></td>';
+        echo '<td>'.$row[0].'</td><td>'.$row[3].'</td><td>'.$row[4].' '.$row[5].'</td><td>'.$row[1].'</td><td>'.$row[2].'</td><td><a href="./rezervacijos_redagavimas.php?id='.$row[6].'">Redaguoti</a></td><td><a onclick=DeleteReservation('.$row[6].')>Trinti</a></td>';
         echo '</tr>';
         }
         $dbc->close();?>

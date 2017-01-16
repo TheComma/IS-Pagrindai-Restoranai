@@ -2,11 +2,11 @@ $(document).ready(function(){
   $("#reservationdate").on('dp.change',function(){
     var date = $("#reservationdate").val();
     var rest = $('#restaurant').val();
-    var datastring = 'date='+date+"&rest="+rest;
+    var datastring = 'date='+date+"&rest="+rest+"&hours=1";
     if(rest != ""){
       $.ajax({
         type : "POST",
-        url: "./Ajax_Requests/Hours.php",
+        url: "./Controllers/Rezervavimu_valdiklis.php",
         data: datastring,
         cache: false,
         success: function(result){
@@ -21,11 +21,11 @@ $(document).on('click','#getData',function(){
   var start = $("#start").val();
   var end = $('#end').val();
   var rest = $('#restaurant').val();
-  var datastring = "start="+start+"&end="+end+"&rest="+rest;
+  var datastring = "start="+start+"&end="+end+"&rest="+rest+"&report=1";
   if(start != "" && end != ""){
     $.ajax({
       type : "POST",
-      url: "./Ajax_Requests/rezervavimu_ataskaitos.php",
+      url: "./Controllers/Rezervavimu_valdiklis.php",
       data: datastring,
       cache: false,
       success: function(result){
@@ -83,10 +83,10 @@ function DeleteReservation(id){
   })
 }
 function ConfirmReservation(id){
-  dataid = "id="+id;
+  dataid = "id="+id+"&confirm=1";
   $.ajax({
       type: "POST",
-      url: "./Ajax_Requests/ConfirmReservation.php",
+      url: "./Controllers/Rezervavimu_valdiklis.php",
       data: dataid,
       cache: false,
       success: function(){
@@ -95,10 +95,10 @@ function ConfirmReservation(id){
   })
 }
 function DenyReservation(id){
-  dataid = "id="+id;
+  dataid = "id="+id+"&deny=1";
   $.ajax({
       type: "POST",
-      url: "./Ajax_Requests/DenyReservation.php",
+      url: "./Controllers/Rezervavimu_valdiklis.php",
       data: dataid,
       cache: false,
       success: function(){

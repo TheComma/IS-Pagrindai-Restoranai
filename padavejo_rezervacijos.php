@@ -16,7 +16,7 @@ if (mysqli_connect_errno()) {
 die('Connect failed: '.mysqli_connect_errno().' : '.mysqli_connect_error());
 }
 $waiterId = $_SESSION['userRefId'];
-$query = "SELECT rezervacija.data, rezervacija.zmoniu_skaicius,rezervacija.komentarai,rezervacijos_valandos.valandos,restoranas.adresas,restoranas.miestas,rezervacija.id FROM rezervacija,rezervacijos_valandos,restoranas,staliukas,padavejas WHERE fk_busena = 2 AND padavejas.id = '$waiterId' AND staliukas.fk_padavejas = padavejas.id AND fk_staliukas = staliukas.staliuko_indentifikatorius AND rezervacija.fk_valandos = rezervacijos_valandos.id AND rezervacija.fk_restoranas = restoranas.id";
+$query = "SELECT rezervacija.data, rezervacija.zmoniu_skaicius,rezervacija.komentarai,rezervacijos_valandos.valandos,restoranas.adresas,restoranas.miestas,rezervacija.fk_staliukas FROM rezervacija,rezervacijos_valandos,restoranas,staliukas,padavejas WHERE fk_busena = 2 AND padavejas.id = '$waiterId' AND staliukas.fk_padavejas = padavejas.id AND fk_staliukas = staliukas.staliuko_indentifikatorius AND rezervacija.fk_valandos = rezervacijos_valandos.id AND rezervacija.fk_restoranas = restoranas.id ORDER BY rezervacija.data ASC";
 $result = mysqli_query($dbc,$query);
  ?>
 <!DOCTYPE html>
@@ -41,6 +41,7 @@ $result = mysqli_query($dbc,$query);
           <th>Restoranas</th>
           <th>Žmonių kiekis</th>
           <th>Komentarai</th>
+          <th>Staliukas</th>
         </tr>
       </thead>
       <tbody>
@@ -52,7 +53,8 @@ $result = mysqli_query($dbc,$query);
         .'<td>'.$row[3].'</td>'
         .'<td>'.$row[4].' '.$row[5].'</td>'
         .'<td>'.$row[1].'</td>'
-        .'<td>'.$row[2].'</td>';
+        .'<td>'.$row[2].'</td>'
+        .'<td>'.$row[6].'</td>';
         }
         $dbc->close();
         ?>

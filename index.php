@@ -15,8 +15,9 @@
 			    	<h3 class="panel-title">Vartotojų prisijungimas</h3>
 			 	</div>
 			  	<div class="panel-body">
-			    	<form action="./User/userlogin.php" method="post" accept-charset="UTF-8" role="form">
+			    	<form action="./Controllers/Rezervavimu_valdiklis.php" method="post" accept-charset="UTF-8" role="form">
                     <fieldset>
+											<input type="hidden" name="login" value="1" />
 			    	  	<div class="form-group">
 			    		    <input class="form-control" placeholder="Vartotojo vardas" name="username" type="text">
 			    		</div>

@@ -14,11 +14,11 @@
   $result = mysqli_query($dbc,$query);
   if (mysqli_num_rows($result) > 0){
   echo '<table class="table">';
+  $visoval = 0;
   echo '<thead><tr><th>Data</th><th>Pradėjo darbą</th><th>Baigė darbą</th><th>Darbo valandos</th><th>Komentarai</th><th>Uždarbis</th></tr></thead><tbody>';
   while ($row = mysqli_fetch_array($result, MYSQLI_NUM)){
 	  $isdirbta = strtotime($row[2])-strtotime($row[1]);
 	  $isdirbtaval = $isdirbta/3600;
-	  $visoval = 0;
 	  $visoval += $isdirbtaval;
     echo '<tr><td>'.$row[0].'</td><td>' . $row[1] . '</td><td>' . $row[2] . '</td><td>' . $isdirbtaval .'</td><td>' .$row[3]. '</td><td>' .$row[4].'</td></tr>';
   }

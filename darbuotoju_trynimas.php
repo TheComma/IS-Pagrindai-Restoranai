@@ -44,7 +44,7 @@
 											if(mysqli_num_rows($result)>0){
 											while($row =  mysqli_fetch_assoc($result)){
 											echo "<tr><td>" . $row['vardas'] . "</td><td>" . $row['pavarde'] .
-											"</td><td>" . $row['saskaitos_numeris'] . "</td><td><a href='Personalas/darbuotoju_salinimas.php?id=" . $row['id'] . "' class='btn btn-danger' role='button'>Trinti</a></td></tr>";
+											"</td><td>" . $row['asmens_kodas'] . "</td><td><a href='Personalas/darbuotojo_salinimas.php?id=" . $row['id'] . "' class='btn btn-danger' role='button'>Trinti</a></td></tr>";
 											}
 											}
 								?>

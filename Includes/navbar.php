@@ -49,7 +49,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Personalas
                         <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-							<li><a href="./darbuotoju_registracija.php">Registruoti naują darbuotoją</a></li>
+							<li><a href="./vartotojo_registravimas.php">Registruoti naują darbuotoją</a></li>
 							<li><a href="./darbuotoju_trynimas.php">Šalinti darbuotoją iš sistemos</a></li>
 							<li><a href="./darbo_valandu_redagavimas.php">Redaguoti darbuotojo darbo valandas</a></li>
                         </ul>
